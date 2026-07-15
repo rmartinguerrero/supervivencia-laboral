@@ -23,6 +23,7 @@ export function setStorageItem<T>(key: string, value: T): void {
 
 // Salary config
 export interface SalaryConfig {
+  isConfigured: boolean;
   payDay: number; // 1-31
   monthlySalary: number;
   hasSummerExtra: boolean;
@@ -32,6 +33,7 @@ export interface SalaryConfig {
 }
 
 export const defaultSalaryConfig: SalaryConfig = {
+  isConfigured: false,
   payDay: 25,
   monthlySalary: 1500,
   hasSummerExtra: true,
@@ -42,11 +44,13 @@ export const defaultSalaryConfig: SalaryConfig = {
 
 // Friday config
 export interface FridayConfig {
+  isConfigured: boolean;
   targetHour: number; // 0-23
   targetMinute: number; // 0-59
 }
 
 export const defaultFridayConfig: FridayConfig = {
+  isConfigured: false,
   targetHour: 18,
   targetMinute: 0,
 };
@@ -70,12 +74,14 @@ export const defaultLifeSalaryConfig: LifeSalaryConfig = {
 
 // Retirement config
 export interface RetirementConfig {
+  isConfigured: boolean;
   retirementAge: number;
   currentAge: number;
   yearsContributed: number;
 }
 
 export const defaultRetirementConfig: RetirementConfig = {
+  isConfigured: false,
   retirementAge: 67,
   currentAge: 30,
   yearsContributed: 5,

@@ -7,7 +7,7 @@ import {
   defaultBossHitsRecord,
 } from '../utils/localStorage';
 
-const hitSounds = [
+const hitTexts = [
   'POW!',
   'WHACK!',
   'BAM!',
@@ -15,6 +15,38 @@ const hitSounds = [
   'OUCH!',
   'THWACK!',
 ];
+
+function playHitSound() {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    const sounds = [
+      { freq: 200, type: 'square' as OscillatorType, decay: 0.1 },
+      { freq: 150, type: 'sawtooth' as OscillatorType, decay: 0.15 },
+      { freq: 300, type: 'square' as OscillatorType, decay: 0.08 },
+      { freq: 100, type: 'triangle' as OscillatorType, decay: 0.2 },
+    ];
+
+    const sound = sounds[Math.floor(Math.random() * sounds.length)];
+
+    oscillator.type = sound.type;
+    oscillator.frequency.setValueAtTime(sound.freq, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + sound.decay);
+
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + sound.decay);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + sound.decay);
+  } catch {}
+}
 
 export default function BossHitsGameIT() {
   const [record, setRecord] = useState<BossHitsRecord>(defaultBossHitsRecord);
@@ -29,6 +61,8 @@ export default function BossHitsGameIT() {
   }, []);
 
   const handleHit = useCallback((e: React.MouseEvent) => {
+    playHitSound();
+
     setCurrentHits(prev => prev + 1);
     const totalHits = currentHits + 1;
 
@@ -44,7 +78,7 @@ export default function BossHitsGameIT() {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setHitEffect({ x, y, sound: getRandomItem(hitSounds), id: Date.now() });
+    setHitEffect({ x, y, sound: getRandomItem(hitTexts), id: Date.now() });
 
     setBossState('hit');
     setTimeout(() => setBossState(totalHits % 10 === 0 ? 'angry' : 'normal'), 300);
@@ -88,7 +122,7 @@ export default function BossHitsGameIT() {
 
         {currentPhrase && (
           <div className="phrase-display">
-            <span className="phrase-tag">COLPO #{currentHits}:</span>
+            <span className="phrase-tag">#{currentHits}:</span>
             {currentPhrase}
           </div>
         )}

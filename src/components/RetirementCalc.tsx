@@ -9,11 +9,7 @@ import {
 } from '../utils/localStorage';
 import confetti from 'canvas-confetti';
 
-interface Props {
-  lang?: 'es' | 'it';
-}
-
-export default function RetirementCalc({ lang = 'es' }: Props) {
+export default function RetirementCalc() {
   const [config, setConfig] = useState<RetirementConfig>(defaultRetirementConfig);
   const [showConfig, setShowConfig] = useState(true);
   const [result, setResult] = useState<ReturnType<typeof calculateRetirement> | null>(null);
@@ -24,14 +20,40 @@ export default function RetirementCalc({ lang = 'es' }: Props) {
   useEffect(() => {
     const saved = getStorageItem<RetirementConfig>('retirement-config', defaultRetirementConfig);
     setConfig(saved);
+
+    if (saved.isConfigured) {
+      const retirement = calculateRetirement(
+        saved.currentAge,
+        saved.retirementAge,
+        saved.yearsContributed
+      );
+      setResult(retirement);
+      selectPhrase(retirement);
+      setShowConfig(false);
+    } else {
+      setShowConfig(true);
+    }
   }, []);
+
+  const selectPhrase = (retirement: ReturnType<typeof calculateRetirement>) => {
+    if (retirement.isRetired) {
+      setPhrase(getRandomItem(retirementPhrases.today));
+    } else if (retirement.yearsRemaining >= 30) {
+      setPhrase(getRandomItem(retirementPhrases.decades));
+    } else if (retirement.yearsRemaining >= 10) {
+      setPhrase(getRandomItem(retirementPhrases.years));
+    } else if (retirement.yearsRemaining >= 1 || retirement.monthsRemaining >= 1) {
+      setPhrase(getRandomItem(retirementPhrases.months));
+    } else {
+      setPhrase(getRandomItem(retirementPhrases.days));
+    }
+  };
 
   useEffect(() => {
     if (result?.isRetired && !confettiPlayed.current) {
       confettiPlayed.current = true;
       setShowConfetti(true);
 
-      // Fire confetti
       const duration = 5 * 1000;
       const end = Date.now() + duration;
 
@@ -66,20 +88,9 @@ export default function RetirementCalc({ lang = 'es' }: Props) {
       config.yearsContributed
     );
     setResult(retirement);
-
-    // Select phrase based on time remaining
-    if (retirement.isRetired) {
-      setPhrase(getRandomItem(retirementPhrases.today));
-    } else if (retirement.yearsRemaining >= 30) {
-      setPhrase(getRandomItem(retirementPhrases.decades));
-    } else if (retirement.yearsRemaining >= 10) {
-      setPhrase(getRandomItem(retirementPhrases.years));
-    } else {
-      setPhrase(getRandomItem(retirementPhrases.months));
-    }
-
+    selectPhrase(retirement);
+    setStorageItem('retirement-config', { ...config, isConfigured: true });
     setShowConfig(false);
-    setStorageItem('retirement-config', config);
   };
 
   return (
@@ -137,22 +148,22 @@ export default function RetirementCalc({ lang = 'es' }: Props) {
               <h2>TE FALTAN PARA LA JUBILACIÓN</h2>
               <div className="retirement-countdown">
                 <div className="countdown-item">
-                  <span className="countdown-number">{result?.yearsRemaining}</span>
+                  <span className="countdown-number">{result?.yearsRemaining ?? 0}</span>
                   <span className="countdown-label">AÑOS</span>
                 </div>
                 <div className="countdown-item">
-                  <span className="countdown-number">{result?.monthsRemaining}</span>
+                  <span className="countdown-number">{result?.monthsRemaining ?? 0}</span>
                   <span className="countdown-label">MESES</span>
                 </div>
                 <div className="countdown-item">
-                  <span className="countdown-number">{result?.daysRemaining}</span>
+                  <span className="countdown-number">{result?.daysRemaining ?? 0}</span>
                   <span className="countdown-label">DÍAS</span>
                 </div>
               </div>
             </>
           )}
 
-          <p className="phrase">{phrase}</p>
+          {phrase && <p className="phrase">{phrase}</p>}
 
           <button
             className="btn btn-small"

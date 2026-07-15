@@ -29,18 +29,24 @@ export default function SalaryCountdownIT() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    if (!config.isConfigured) {
+      setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0, percentRemaining: 0 });
+      setPhrase('');
+      setExtraInfo(null);
+      return;
+    }
+
+    const pickPhrase = (salary: number) => {
+      if (salary < 1400) return getRandomItem(salaryPhrases.low);
+      if (salary <= 2000) return getRandomItem(salaryPhrases.mid);
+      return getRandomItem(salaryPhrases.high);
+    };
+
     const updateTimer = () => {
       const payDate = getNextPayDate(config.payDay);
       const remaining = getTimeRemaining(payDate);
       setTimeLeft(remaining);
-
-      if (remaining.days <= 3) {
-        setPhrase(getRandomItem(salaryPhrases.soon));
-      } else if (remaining.days <= 15) {
-        setPhrase(getRandomItem(salaryPhrases.mid));
-      } else {
-        setPhrase(getRandomItem(salaryPhrases.far));
-      }
+      setPhrase(pickPhrase(config.monthlySalary));
 
       const now = new Date();
       const year = now.getFullYear();
@@ -58,44 +64,59 @@ export default function SalaryCountdownIT() {
         let christmasDate = new Date(year, month - 1, day);
         if (christmasDate < now) christmasDate = new Date(year + 1, month - 1, day);
         const christmasDays = Math.ceil((christmasDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-        if (!extraInfo || christmasDays < extraInfo.daysLeft) {
-          setExtraInfo({ type: 'christmas', date: christmasDate, daysLeft: christmasDays });
-        }
+        setExtraInfo(prev => {
+          if (!prev || christmasDays < prev.daysLeft) {
+            return { type: 'christmas', date: christmasDate, daysLeft: christmasDays };
+          }
+          return prev;
+        });
       }
     };
 
     updateTimer();
-    const interval = setInterval(updateTimer, 1000);
+    const interval = setInterval(updateTimer, 60000);
     return () => clearInterval(interval);
   }, [config]);
 
   const handleSave = () => {
-    setStorageItem('salary-config', config);
+    setStorageItem('salary-config', { ...config, isConfigured: true });
+    setConfig({ ...config, isConfigured: true });
     setShowConfig(false);
   };
 
   return (
     <div className="tool-container">
       <div className="result">
-        <h2>MANCANO {timeLeft.days} GIORNI PER LO STIPENDIO</h2>
-        <div className="big-number">{formatTimeRemainingIT(timeLeft)}</div>
-        <p className="phrase">{phrase}</p>
+        {!config.isConfigured ? (
+          <>
+            <h2>QUANTO MANCANO PER LO STIPENDIO</h2>
+            <div className="big-number" style={{ fontSize: '1.2rem', color: '#888', padding: '1rem' }}>
+              Configura il giorno di pagamento per iniziare a contare
+            </div>
+          </>
+        ) : (
+          <>
+            <h2>MANCANO {timeLeft.days} GIORNI PER LO STIPENDIO</h2>
+            <div className="big-number">{formatTimeRemainingIT(timeLeft)}</div>
+            {phrase && <p className="phrase">{phrase}</p>}
 
-        {config.hasSummerExtra && (
-          <div className="extra-info">
-            <p>MANCANO {extraInfo?.daysLeft || 0} GIORNI PER LA TREDICESIMA ESTIVA</p>
-          </div>
+            {config.hasSummerExtra && extraInfo?.type === 'summer' && (
+              <div className="extra-info">
+                <p>MANCANO {extraInfo.daysLeft} GIORNI PER LA TREDICESIMA ESTIVA</p>
+              </div>
+            )}
+
+            {config.hasChristmasExtra && extraInfo?.type === 'christmas' && (
+              <div className="extra-info">
+                <p>MANCANO {extraInfo.daysLeft} GIORNI PER LA TREDICESIMA DI NATALE</p>
+              </div>
+            )}
+
+            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
+              Percentuale del mese rimanente: {timeLeft.percentRemaining}%
+            </p>
+          </>
         )}
-
-        {config.hasChristmasExtra && (
-          <div className="extra-info">
-            <p>MANCANO {extraInfo?.daysLeft || 0} GIORNI PER LA TREDICESIMA DI NATALE</p>
-          </div>
-        )}
-
-        <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
-          Percentuale del mese rimanente: {timeLeft.percentRemaining}%
-        </p>
       </div>
 
       <button className="btn btn-small" onClick={() => setShowConfig(!showConfig)} style={{ marginTop: '1rem' }}>

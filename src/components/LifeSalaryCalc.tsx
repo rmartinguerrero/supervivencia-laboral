@@ -52,9 +52,9 @@ export default function LifeSalaryCalc({ lang = 'es' }: Props) {
     });
 
     // Determine phrase based on salary
-    if (config.monthlySalary >= 3000) {
+    if (config.monthlySalary >= 2000) {
       setPhrase(getRandomItem(lifeSalaryPhrases.high));
-    } else if (config.monthlySalary >= 1500) {
+    } else if (config.monthlySalary >= 1400) {
       setPhrase(getRandomItem(lifeSalaryPhrases.mid));
     } else {
       setPhrase(getRandomItem(lifeSalaryPhrases.low));

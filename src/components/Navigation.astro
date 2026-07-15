@@ -1,45 +1,51 @@
 ---
+import { translatePath } from '../utils/slugs';
+
 const lang = Astro.currentLocale || 'es';
 
 const navItems = lang === 'es' ? [
-  { href: '/es', label: 'INICIO' },
-  { href: '/es/cuanto-falta-cobrar', label: '¿CUÁNTO FALTA?' },
-  { href: '/es/cuanto-falta-viernes', label: 'VIERNES' },
-  { href: '/es/calculadora-vida', label: 'VIDA vs SALARIO' },
-  { href: '/es/calculadora-jubilacion', label: 'JUBILACIÓN' },
-  { href: '/es/libro-firmas', label: 'LIBRO DE FIRMAS' },
-  { href: '/es/pega-al-jefe', label: 'PEGA AL JEFE' },
+  { slug: '', label: 'INICIO' },
+  { slug: 'cuanto-falta-cobrar', label: '¿CUÁNTO FALTA?' },
+  { slug: 'cuanto-falta-viernes', label: 'VIERNES' },
+  { slug: 'calculadora-vida', label: 'VIDA vs SALARIO' },
+  { slug: 'calculadora-jubilacion', label: 'JUBILACIÓN' },
+  { slug: 'libro-firmas', label: 'LIBRO DE FIRMAS' },
+  { slug: 'pega-al-jefe', label: 'PEGA AL JEFE' },
 ] : [
-  { href: '/it', label: 'HOME' },
-  { href: '/it/quanto-mancano-stipendio', label: 'QUANTO MANCA?' },
-  { href: '/it/quanto-mancano-venerdi', label: 'VENERDÌ' },
-  { href: '/it/calcolatrice-vita', label: 'VITA vs STIPENDIO' },
-  { href: '/it/calcolatrice-pensione', label: 'PENSIONE' },
-  { href: '/it/libro-firme', label: 'LIBRO DELLE FIRME' },
-  { href: '/it/colpisci-il-props', label: 'COLPISCI IL BOSS' },
+  { slug: '', label: 'HOME' },
+  { slug: 'quanto-mancano-stipendio', label: 'QUANTO MANCA?' },
+  { slug: 'quanto-mancano-venerdi', label: 'VENERDÌ' },
+  { slug: 'calcolatrice-vita', label: 'VITA vs STIPENDIO' },
+  { slug: 'calcolatrice-pensione', label: 'PENSIONE' },
+  { slug: 'libro-firme', label: 'LIBRO DELLE FIRME' },
+  { slug: 'colpisci-il-props', label: 'COLPISCI IL BOSS' },
 ];
 
 const otherLang = lang === 'es' ? 'it' : 'es';
 const otherLangLabel = lang === 'es' ? '🇮🇹 IT' : '🇪🇸 ES';
 const currentPath = Astro.url.pathname;
+
+// Build translated path for language switcher
+const otherLangPath = translatePath(currentPath, otherLang);
 ---
 
 <nav class="retro-nav">
   <div class="nav-container">
     <a href={`/${lang}`} class="nav-logo">
-      ⚡ SUPERVIVENCIA LABORAL
+      💼 {lang === 'es' ? 'SUPERVIVENCIA LABORAL' : 'SOPRAVVIVENZA LAVORATIVA'}
     </a>
 
     <div class="nav-links">
-      {navItems.map(item => (
-        <a
-          href={item.href}
-          class:list={['nav-link', { active: currentPath === item.href || currentPath === item.href + '/' }]}
-        >
-          {item.label}
-        </a>
-      ))}
-      <a href={`/${otherLang}`} class="nav-link lang-switch">
+      {navItems.map(item => {
+        const href = `/${lang}${item.slug ? '/' + item.slug : ''}`;
+        const isActive = currentPath === href || currentPath === href + '/';
+        return (
+          <a href={href} class:list={['nav-link', { active: isActive }]}>
+            {item.label}
+          </a>
+        );
+      })}
+      <a href={otherLangPath} class="nav-link lang-switch">
         {otherLangLabel}
       </a>
     </div>

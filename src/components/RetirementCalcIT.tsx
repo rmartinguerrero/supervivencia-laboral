@@ -20,7 +20,34 @@ export default function RetirementCalcIT() {
   useEffect(() => {
     const saved = getStorageItem<RetirementConfig>('retirement-config', defaultRetirementConfig);
     setConfig(saved);
+
+    if (saved.isConfigured) {
+      const retirement = calculateRetirement(
+        saved.currentAge,
+        saved.retirementAge,
+        saved.yearsContributed
+      );
+      setResult(retirement);
+      selectPhrase(retirement);
+      setShowConfig(false);
+    } else {
+      setShowConfig(true);
+    }
   }, []);
+
+  const selectPhrase = (retirement: ReturnType<typeof calculateRetirement>) => {
+    if (retirement.isRetired) {
+      setPhrase(getRandomItem(retirementPhrases.today));
+    } else if (retirement.yearsRemaining >= 30) {
+      setPhrase(getRandomItem(retirementPhrases.decades));
+    } else if (retirement.yearsRemaining >= 10) {
+      setPhrase(getRandomItem(retirementPhrases.years));
+    } else if (retirement.yearsRemaining >= 1 || retirement.monthsRemaining >= 1) {
+      setPhrase(getRandomItem(retirementPhrases.months));
+    } else {
+      setPhrase(getRandomItem(retirementPhrases.days));
+    }
+  };
 
   useEffect(() => {
     if (result?.isRetired && !confettiPlayed.current) {
@@ -61,19 +88,9 @@ export default function RetirementCalcIT() {
       config.yearsContributed
     );
     setResult(retirement);
-
-    if (retirement.isRetired) {
-      setPhrase(getRandomItem(retirementPhrases.today));
-    } else if (retirement.yearsRemaining >= 30) {
-      setPhrase(getRandomItem(retirementPhrases.decades));
-    } else if (retirement.yearsRemaining >= 10) {
-      setPhrase(getRandomItem(retirementPhrases.years));
-    } else {
-      setPhrase(getRandomItem(retirementPhrases.months));
-    }
-
+    selectPhrase(retirement);
+    setStorageItem('retirement-config', { ...config, isConfigured: true });
     setShowConfig(false);
-    setStorageItem('retirement-config', config);
   };
 
   return (
@@ -81,22 +98,43 @@ export default function RetirementCalcIT() {
       {showConfig ? (
         <div className="card">
           <h2 style={{ marginBottom: '1rem' }}>CALCOLATRICE PENSIONE</h2>
+
           <div className="form-group">
             <label>ETÀ DI PENSIONAMENTO NEL TUO PAESE</label>
-            <input type="number" min="50" max="80" value={config.retirementAge}
-              onChange={(e) => setConfig({ ...config, retirementAge: parseInt(e.target.value) || 67 })} />
+            <input
+              type="number"
+              min="50"
+              max="80"
+              value={config.retirementAge}
+              onChange={(e) => setConfig({ ...config, retirementAge: parseInt(e.target.value) || 67 })}
+            />
           </div>
+
           <div className="form-group">
             <label>ETÀ ATTUALE</label>
-            <input type="number" min="16" max="100" value={config.currentAge}
-              onChange={(e) => setConfig({ ...config, currentAge: parseInt(e.target.value) || 30 })} />
+            <input
+              type="number"
+              min="16"
+              max="100"
+              value={config.currentAge}
+              onChange={(e) => setConfig({ ...config, currentAge: parseInt(e.target.value) || 30 })}
+            />
           </div>
+
           <div className="form-group">
             <label>ANNI CONTRIBUTITI</label>
-            <input type="number" min="0" max="50" value={config.yearsContributed}
-              onChange={(e) => setConfig({ ...config, yearsContributed: parseInt(e.target.value) || 0 })} />
+            <input
+              type="number"
+              min="0"
+              max="50"
+              value={config.yearsContributed}
+              onChange={(e) => setConfig({ ...config, yearsContributed: parseInt(e.target.value) || 0 })}
+            />
           </div>
-          <button className="btn" onClick={calculate}>CALCOLA LA MIA LIBERTÀ</button>
+
+          <button className="btn" onClick={calculate}>
+            CALCOLA LA MIA LIBERTÀ
+          </button>
         </div>
       ) : (
         <div className="result">
@@ -110,28 +148,32 @@ export default function RetirementCalcIT() {
               <h2>MANCANO PER LA PENSIONE</h2>
               <div className="retirement-countdown">
                 <div className="countdown-item">
-                  <span className="countdown-number">{result?.yearsRemaining}</span>
+                  <span className="countdown-number">{result?.yearsRemaining ?? 0}</span>
                   <span className="countdown-label">ANNI</span>
                 </div>
                 <div className="countdown-item">
-                  <span className="countdown-number">{result?.monthsRemaining}</span>
+                  <span className="countdown-number">{result?.monthsRemaining ?? 0}</span>
                   <span className="countdown-label">MESI</span>
                 </div>
                 <div className="countdown-item">
-                  <span className="countdown-number">{result?.daysRemaining}</span>
+                  <span className="countdown-number">{result?.daysRemaining ?? 0}</span>
                   <span className="countdown-label">GIORNI</span>
                 </div>
               </div>
             </>
           )}
 
-          <p className="phrase">{phrase}</p>
+          {phrase && <p className="phrase">{phrase}</p>}
 
-          <button className="btn btn-small" onClick={() => {
-            setShowConfig(true);
-            setShowConfetti(false);
-            confettiPlayed.current = false;
-          }} style={{ marginTop: '1.5rem' }}>
+          <button
+            className="btn btn-small"
+            onClick={() => {
+              setShowConfig(true);
+              setShowConfetti(false);
+              confettiPlayed.current = false;
+            }}
+            style={{ marginTop: '1.5rem' }}
+          >
             RICALCOLA
           </button>
         </div>

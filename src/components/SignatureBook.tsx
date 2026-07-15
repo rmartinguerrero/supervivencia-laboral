@@ -139,7 +139,7 @@ export default function SignatureBook({ lang = 'es' }: Props) {
               required
               rows={3}
               placeholder={lang === 'es'
-                ? 'Firmo por...')
+                ? 'Firmo por...'
                 : 'Firmo per...'}
             />
             <small>{message.length}/500</small>

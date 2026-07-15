@@ -17,8 +17,6 @@ export default defineConfig({
   integrations: [react()],
   adapter: netlify(),
 
-  output: 'hybrid',
-
   server: {
     port: 4321,
   },

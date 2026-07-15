@@ -8,11 +8,7 @@ import {
   defaultSalaryConfig,
 } from '../utils/localStorage';
 
-interface Props {
-  lang?: 'es' | 'it';
-}
-
-export default function SalaryCountdown({ lang = 'es' }: Props) {
+export default function SalaryCountdown() {
   const [config, setConfig] = useState<SalaryConfig>(defaultSalaryConfig);
   const [showConfig, setShowConfig] = useState(false);
   const [phrase, setPhrase] = useState('');
@@ -23,7 +19,6 @@ export default function SalaryCountdown({ lang = 'es' }: Props) {
     seconds: 0,
     percentRemaining: 0,
   });
-  const [nextPay, setNextPay] = useState<Date>(new Date());
   const [extraInfo, setExtraInfo] = useState<{ type: string; date: Date; daysLeft: number } | null>(null);
 
   useEffect(() => {
@@ -34,91 +29,94 @@ export default function SalaryCountdown({ lang = 'es' }: Props) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    if (!config.isConfigured) {
+      setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0, percentRemaining: 0 });
+      setPhrase('');
+      setExtraInfo(null);
+      return;
+    }
+
+    const pickPhrase = (salary: number) => {
+      if (salary < 1400) return getRandomItem(salaryPhrases.low);
+      if (salary <= 2000) return getRandomItem(salaryPhrases.mid);
+      return getRandomItem(salaryPhrases.high);
+    };
+
     const updateTimer = () => {
       const payDate = getNextPayDate(config.payDay);
-      setNextPay(payDate);
       const remaining = getTimeRemaining(payDate);
       setTimeLeft(remaining);
+      setPhrase(pickPhrase(config.monthlySalary));
 
-      // Determine phrase based on days
-      if (remaining.days <= 3) {
-        setPhrase(getRandomItem(salaryPhrases.soon));
-      } else if (remaining.days <= 15) {
-        setPhrase(getRandomItem(salaryPhrases.mid));
-      } else {
-        setPhrase(getRandomItem(salaryPhrases.far));
-      }
-
-      // Check extras
       const now = new Date();
       const year = now.getFullYear();
 
       if (config.hasSummerExtra) {
         const [month, day] = config.summerExtraDate.split('-').map(Number);
         let summerDate = new Date(year, month - 1, day);
-        if (summerDate < now) {
-          summerDate = new Date(year + 1, month - 1, day);
-        }
+        if (summerDate < now) summerDate = new Date(year + 1, month - 1, day);
         const summerDays = Math.ceil((summerDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-        setExtraInfo({
-          type: 'summer',
-          date: summerDate,
-          daysLeft: summerDays,
-        });
+        setExtraInfo({ type: 'summer', date: summerDate, daysLeft: summerDays });
       }
 
       if (config.hasChristmasExtra) {
         const [month, day] = config.christmasExtraDate.split('-').map(Number);
         let christmasDate = new Date(year, month - 1, day);
-        if (christmasDate < now) {
-          christmasDate = new Date(year + 1, month - 1, day);
-        }
+        if (christmasDate < now) christmasDate = new Date(year + 1, month - 1, day);
         const christmasDays = Math.ceil((christmasDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-        if (!extraInfo || christmasDays < extraInfo.daysLeft) {
-          setExtraInfo({
-            type: 'christmas',
-            date: christmasDate,
-            daysLeft: christmasDays,
-          });
-        }
+        setExtraInfo(prev => {
+          if (!prev || christmasDays < prev.daysLeft) {
+            return { type: 'christmas', date: christmasDate, daysLeft: christmasDays };
+          }
+          return prev;
+        });
       }
     };
 
     updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-
+    const interval = setInterval(updateTimer, 60000);
     return () => clearInterval(interval);
   }, [config]);
 
   const handleSave = () => {
-    setStorageItem('salary-config', config);
+    setStorageItem('salary-config', { ...config, isConfigured: true });
+    setConfig({ ...config, isConfigured: true });
     setShowConfig(false);
   };
-
-  const phrases = lang === 'es' ? salaryPhrases : salaryPhrases;
 
   return (
     <div className="tool-container">
       <div className="result">
-        <h2>FALTAN {timeLeft.days} DÍAS PARA COBRAR</h2>
-        <div className="big-number">{formatTimeRemaining(timeLeft)}</div>
-        <p className="phrase">{phrase}</p>
+        {!config.isConfigured ? (
+          <>
+            <h2>CUÁNTO FALTA PARA COBRAR</h2>
+            <div className="big-number" style={{ fontSize: '1.2rem', color: '#888', padding: '1rem' }}>
+              Configura tu día de cobro para empezar a contar
+            </div>
+          </>
+        ) : (
+          <>
+            <h2>FALTAN {timeLeft.days} DÍAS PARA COBRAR</h2>
+            <div className="big-number">{formatTimeRemaining(timeLeft)}</div>
+            {phrase && <p className="phrase">{phrase}</p>}
 
-        {config.hasSummerExtra && (
-          <div className="extra-info">
-            <p>FALTAN {extraInfo?.daysLeft || 0} DÍAS PARA LA PAGA EXTRA DE VERANO</p>
-          </div>
+            {config.hasSummerExtra && extraInfo?.type === 'summer' && (
+              <div className="extra-info">
+                <p>FALTAN {extraInfo.daysLeft} DÍAS PARA LA PAGA EXTRA DE VERANO</p>
+              </div>
+            )}
+
+            {config.hasChristmasExtra && extraInfo?.type === 'christmas' && (
+              <div className="extra-info">
+                <p>FALTAN {extraInfo.daysLeft} DÍAS PARA LA PAGA EXTRA DE NAVIDAD</p>
+              </div>
+            )}
+
+            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
+              Porcentaje del mes restante: {timeLeft.percentRemaining}%
+            </p>
+          </>
         )}
-
-        {config.hasChristmasExtra && (
-          <div className="extra-info">
-            <p>FALTAN {extraInfo?.daysLeft || 0} DÍAS PARA LA PAGA EXTRA DE NAVIDAD</p>
-          </div>
-        )}
-
-        <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
-          Porcentaje del mes restante: {timeLeft.percentRemaining}%
-        </p>
       </div>
 
       <button

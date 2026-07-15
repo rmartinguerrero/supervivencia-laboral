@@ -4,8 +4,14 @@ import { homePhrases, getRandomItem } from '../../data/it/phrases';
 ---
 
 <Base title="Home">
+  <div class="marquee">
+    <span class="marquee-text">
+      💼 BENVENUTO NELLA ZONA DI SOPRAVVIVENZA LAVORATIVA — QUI NON SI PRODUTTIVIZZA — QUI SI SOPRAVVIVE 💼
+    </span>
+  </div>
+
   <div class="home-hero">
-    <h1>SOPRAVVIVENZA LAVORATIVA</h1>
+    <h1>💼 SOPRAVVIVENZA LAVORATIVA</h1>
     <p class="hero-subtitle">Il sito per gente che è stanchissima di lavorare</p>
     <p class="hero-phrase">{getRandomItem(homePhrases)}</p>
   </div>
@@ -25,7 +31,7 @@ import { homePhrases, getRandomItem } from '../../data/it/phrases';
 
     <a href="/it/calcolatrice-vita" class="tool-card">
       <div class="tool-icon">⚖️</div>
-      <H2>VITA vs STIPENDIO</H2>
+      <h2>VITA vs STIPENDIO</h2>
       <p>Quanto vale davvero la tua vita lavorativa? Scoprilo con dolore.</p>
     </a>
 
@@ -46,12 +52,6 @@ import { homePhrases, getRandomItem } from '../../data/it/phrases';
       <h2>COLPISCI IL BOSS</h2>
       <p>Un minigioco per liberare tutta la rabbia accumulata da lunedì a giovedì.</p>
     </a>
-  </div>
-
-  <div class="marquee">
-    <span class="marquee-text">
-      ⚡ BENVENUTO NELLA ZONA DI SOPRAVVIVENZA LAVORATIVA — QUI NON SI PRODUTTIVIZZA — QUI SI SOPRAVVIVE ⚡
-    </span>
   </div>
 </Base>
 

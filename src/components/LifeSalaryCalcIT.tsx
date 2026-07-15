@@ -47,9 +47,9 @@ export default function LifeSalaryCalcIT() {
       lifeValuePerHour: Math.round(lifeValuePerHour * 100) / 100,
     });
 
-    if (config.monthlySalary >= 3000) {
+    if (config.monthlySalary >= 2000) {
       setPhrase(getRandomItem(lifeSalaryPhrases.high));
-    } else if (config.monthlySalary >= 1500) {
+    } else if (config.monthlySalary >= 1400) {
       setPhrase(getRandomItem(lifeSalaryPhrases.mid));
     } else {
       setPhrase(getRandomItem(lifeSalaryPhrases.low));

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="briefcase" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513"/>
+      <stop offset="100%" style="stop-color:#654321"/>
+    </linearGradient>
+  </defs>
+  <!-- Briefcase body -->
+  <rect x="15" y="35" width="70" height="45" rx="5" fill="url(#briefcase)" stroke="#3d2314" stroke-width="3"/>
+  <!-- Handle -->
+  <path d="M 35 35 L 35 25 Q 35 15 50 15 Q 65 15 65 25 L 65 35" fill="none" stroke="#3d2314" stroke-width="5" stroke-linecap="round"/>
+  <!-- Clasps -->
+  <rect x="40" y="50" width="20" height="8" rx="2" fill="#D4A574" stroke="#3d2314" stroke-width="2"/>
+  <!-- Belt -->
+  <rect x="15" y="55" width="70" height="4" fill="#D4A574"/>
+  <!-- Stitching -->
+  <rect x="20" y="40" width="60" height="35" rx="3" fill="none" stroke="#D4A574" stroke-width="1" stroke-dasharray="4,3"/>
+</svg>

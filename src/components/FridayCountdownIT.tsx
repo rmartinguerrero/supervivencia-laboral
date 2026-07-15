@@ -29,12 +29,19 @@ export default function FridayCountdownIT() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    if (!config.isConfigured) {
+      setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0, isFriday: false, isPast: false });
+      setPhrase('');
+      return;
+    }
+
+    const today = new Date().getDay();
+    const phrases = fridayPhrases[today] || fridayPhrases[0];
+    setPhrase(getRandomItem(phrases));
+
     const updateTimer = () => {
       const remaining = getTimeUntilFriday(config.targetHour, config.targetMinute);
       setTimeLeft(remaining);
-      const today = new Date().getDay();
-      const phrases = fridayPhrases[today] || fridayPhrases[0];
-      setPhrase(getRandomItem(phrases));
     };
 
     updateTimer();
@@ -43,7 +50,8 @@ export default function FridayCountdownIT() {
   }, [config]);
 
   const handleSave = () => {
-    setStorageItem('friday-config', config);
+    setStorageItem('friday-config', { ...config, isConfigured: true });
+    setConfig({ ...config, isConfigured: true });
     setShowConfig(false);
   };
 
@@ -55,23 +63,32 @@ export default function FridayCountdownIT() {
   return (
     <div className="tool-container">
       <div className="result">
-        {timeLeft.isPast ? (
-          <h2>CE L'AI FATTA!</h2>
+        {!config.isConfigured ? (
+          <>
+            <h2>QUANTO MANCANO AL VENERDÌ</h2>
+            <div className="big-number" style={{ fontSize: '1.2rem', color: '#888', padding: '1rem' }}>
+              Configura l'orario obiettivo per iniziare a contare
+            </div>
+          </>
+        ) : timeLeft.isPast ? (
+          <>
+            <h2>CE L'AI FATTA!</h2>
+            <div className="big-number">🎉 È VENERDÌ! 🎉</div>
+            {phrase && <p className="phrase">{phrase}</p>}
+          </>
         ) : (
-          <h2>MANCANO {timeLeft.days} GIORNI PER IL VENERDÌ</h2>
+          <>
+            <h2>MANCANO {timeLeft.days} GIORNI PER IL VENERDÌ</h2>
+            <div className="big-number">
+              {timeLeft.days}g {timeLeft.hours}o {timeLeft.minutes}m {timeLeft.seconds}s
+            </div>
+            {phrase && <p className="phrase">{phrase}</p>}
+
+            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
+              Oggi è {getDayName(new Date().getDay())} — Obiettivo: Venerdì {config.targetHour}:{config.targetMinute.toString().padStart(2, '0')}
+            </p>
+          </>
         )}
-
-        <div className="big-number">
-          {timeLeft.isPast
-            ? '🎉 È VENERDÌ! 🎉'
-            : `${timeLeft.days}g ${timeLeft.hours}o ${timeLeft.minutes}m ${timeLeft.seconds}s`}
-        </div>
-
-        <p className="phrase">{phrase}</p>
-
-        <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
-          Oggi è {getDayName(new Date().getDay())} — Obiettivo: Venerdì {config.targetHour}:{config.targetMinute.toString().padStart(2, '0')}
-        </p>
       </div>
 
       <button className="btn btn-small" onClick={() => setShowConfig(!showConfig)} style={{ marginTop: '1rem' }}>

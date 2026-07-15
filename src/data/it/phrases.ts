@@ -1,70 +1,83 @@
 // Frasi in italiano per categoria
 
+// getDay(): 0=Dom, 1=Lun, 2=Mar, 3=Mer, 4=Gio, 5=Ven, 6=Sab
 export const fridayPhrases: Record<number, string[]> = {
-  0: [ // Lunedì
-    "Il venerdì è così lontano che sembra una leggenda.",
-    "Lunedì. Il giorno più mentitore: \"questa settimana sarà facile\".",
-    "Inizia l'inferno settimanale. Respira profondamente.",
-    "Oggi è lunedì. Il caffè è il tuo unico amico.",
-  ],
-  1: [ // Martedì
-    "Sopravvivi.",
-    "Martedì: né inizi né fine. Solo sofferenza.",
-    "Sei ancora qui. Impressionante.",
-    "Martedì. Nemmeno il caffè ti salva più.",
-  ],
-  2: [ // Mercoledì
-    "Metà settimana. Non entusiasmarti.",
-    "Mercoledì: il giorno che non sa se essere lunedì o venerdì.",
-    "Hai già fatto 3 giorni. Ne mancano 2. O almeno così dicono.",
-    "Mercoledì. Sei in punto morto emotivo.",
-  ],
-  3: [ // Giovedì
-    "Puoi già fingere di lavorare pensando al venerdì.",
-    "Giovedì: la vigilia del paradiso.",
-    "Un giorno in più. Puoi già sentire il weekend.",
-    "Giovedì. La tua produttività è immaginare il venerdì.",
-  ],
-  4: [ // Venerdì
-    "CE L'AI FATTA! Beh, tecnicamente stai ancora lavorando.",
-    "Venerdì. Sei sopravvissuto un'altra settimana.",
-    "Il venerdì è oggi. Ma il lunedì esisterà anche.",
-    "Venerdì mattina: la felicità più menzogna.",
-  ],
-  5: [ // Sabato
-    "Perché sei qui? Domani non lavori nemmeno.",
-    "È sabato. Vai a toccare l'erba o qualcosa.",
-    "Sabato: riposa, che il lunedì ritorna il dolore.",
-  ],
-  6: [ // Domenica
+  0: [ // Domenica
     "Perché sei qui? Domani ricomincia tutto.",
     "Domenica pomeriggio: il re degli sport è l'ansia.",
     "Domenica. Goditi, che il lunedì è inevitabile.",
     "Stai guardando questo di domenica. Questo dice molto su di te.",
   ],
+  1: [ // Lunedì
+    "Il venerdì è così lontano che sembra una leggenda.",
+    "Lunedì. Il giorno più mentitore: \"questa settimana sarà facile\".",
+    "Inizia l'inferno settimanale. Respira profondamente.",
+    "Oggi è lunedì. Il caffè è il tuo unico amico.",
+  ],
+  2: [ // Martedì
+    "Sopravvivi.",
+    "Martedì: né inizi né fine. Solo sofferenza.",
+    "Sei ancora qui. Impressionante.",
+    "Martedì. Nemmeno il caffè ti salva più.",
+  ],
+  3: [ // Mercoledì
+    "Metà settimana. Non entusiasmarti.",
+    "Mercoledì: il giorno che non sa se essere lunedì o venerdì.",
+    "Hai già fatto 3 giorni. Ne mancano 2. O almeno così dicono.",
+    "Mercoledì. Sei in punto morto emotivo.",
+  ],
+  4: [ // Giovedì
+    "Puoi già fingere di lavorare pensando al venerdì.",
+    "Giovedì: la vigilia del paradiso.",
+    "Un giorno in più. Puoi già sentire il weekend.",
+    "Giovedì. La tua produttività è immaginare il venerdì.",
+  ],
+  5: [ // Venerdì
+    "CE L'AI FATTA! Beh, tecnicamente stai ancora lavorando.",
+    "Venerdì. Sei sopravvissuto un'altra settimana.",
+    "Il venerdì è oggi. Ma il lunedì esisterà anche.",
+    "Venerdì mattina: la felicità più menzogna.",
+  ],
+  6: [ // Sabato
+    "Perché sei qui? Domani non lavori nemmeno.",
+    "È sabato. Vai a toccare l'erba o qualcosa.",
+    "Sabato: riposa, che il lunedì ritorna il dolore.",
+  ],
 };
 
+// Stipendio basso: <1400€  |  Medio: 1400-2000€  |  Alto: ≥2000€
 export const salaryPhrases = {
-  soon: [
+  low: [
     "Puoi già tornare a essere povero con i soldi!",
     "La banca sta preparando il tuo breve momento di felicità.",
-    "Tieni ancora un po'.",
-    "Quasi. MOLTO QUASI.",
-    "Il tuo stipendio è dietro l'angolo.",
+    "Tieni ancora un po'. I soldi arrivano... suppostamente.",
+    "Quasi. MOLTO QUASI. Ma nemmeno tanto.",
+    "Il tuo stipendio è dietro l'angolo. Un angolo povero.",
+    "Non spendere tutto lo stipendio nelle prime 48 ore. Ah, aspetta, è già finito.",
+    "L'attesa è lunga, ma i soldi nemmeno sono tanti.",
+    "Respira. Ogni giorno è un passo verso la felicità effimera.",
+    "Quanto sono lontani i soldi. Quanto è vicina la fame.",
+    "Speriamo che non si rompa nulla in casa.",
   ],
   mid: [
     "Resisti. Ce la puoi. Forse.",
     "Non spendere tutto lo stipendio nelle prime 48 ore.",
-    "L'attesa è lunga, ma i soldi nemmeno sono tanti.",
+    "L'attesa è lunga, ma almeno i soldi sono decenti.",
     "Respira. Ogni giorno è un passo verso la felicità effimera.",
     "Hai sopravvissuto un altro mese. Incredibile.",
+    "Il tuo stipendio è dietro l'angolo. Ma non spendere troppo.",
+    "Quasi. I soldi arrivano, ma prima bisogna soffrire un po'.",
+    "Classe media: né ricchi né poveri. Solo stanchi.",
   ],
-  far: [
-    "Quanto sono lontani i soldi. Quanto è vicina la fame.",
-    "Speriamo che non si rompa nulla in casa.",
-    "I soldi vengono, ma prima bisogna soffrire.",
-    "Manca ancora molto. Pensa in positivo... o no.",
-    "Almeno hai un lavoro. Ah, aspetta...",
+  high: [
+    "Sei ricco. Perché guardi il calendario delle buste paga?",
+    "Il tuo stipendio ha uno stipendio. Puoi già comprarti un'altra cosa inutile.",
+    "Non sei un lavoratore. Sei un dirigente travestito che aspetta i soldi.",
+    "Con quello stipendio puoi già guardare gli altri lavoratori con disprezzo mentre aspetti.",
+    "La banca sta preparando il tuo breve momento di felicità. Anche se hai già abbastanza.",
+    "Hai bisogno di un tirocinante che ti conti quanto manca?",
+    "Manca ancora molto. Pensa in positivo... o a comprare qualcosa di caro.",
+    "Almeno hai un lavoro. E uno stipendio buono. Smetti di lamentarti.",
   ],
   extraSummer: [
     "La tredicesima estiva. L'oasi nel deserto lavorativo.",
@@ -123,7 +136,14 @@ export const retirementPhrases = {
     "La luce in fondo al tunnel... o è un treno.",
     "Meno di un anno. Puoi già iniziare a fare la siesta senza colpa.",
     "Presto sarai libero. Beh, più o meno.",
-    "Mesi. Puoi già guardare i giovane con pietà.",
+    "Mesi. Puoi già guardare i giovani con pietà.",
+  ],
+  days: [
+    "Quasi! Puoi già iniziare a guardare il tuo capo con compassione.",
+    "Mancano giorni. Presto sarai davvero libero.",
+    "Puoi già iniziare a dire addio alle email.",
+    "A pochi giorni. Puoi già sentire la libertà.",
+    "È quasi tuo. Resisti ancora un po'.",
   ],
   today: [
     "OGGI VAI IN PENSIONE!!! FINE DELLA SCHIAVITÙ MODERNA!",

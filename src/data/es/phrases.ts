@@ -1,70 +1,83 @@
 // Frases en español por categoría
 
+// getDay(): 0=Dom, 1=Lun, 2=Mar, 3=Mié, 4=Jue, 5=Vie, 6=Sáb
 export const fridayPhrases: Record<number, string[]> = {
-  0: [ // Lunes
-    "El viernes está tan lejos que parece una leyenda.",
-    "Lunes. El día más mentiroso: \"esta semana será fácil\".",
-    "Empieza el infierno semanal. Respira hondo.",
-    "Hoy es lunes. El café es tu único amigo.",
-  ],
-  1: [ // Martes
-    "Sobrevives.",
-    "Martes: ni principios ni finales. Solo sufrimiento.",
-    "Sigues aquí. Impresionante.",
-    "Martes. Ni siquiera el café te salva ya.",
-  ],
-  2: [ // Miércoles
-    "Mitad de semana. No te emociones.",
-    "Miércoles: el día que no sabe si ser lunes o viernes.",
-    "Ya llevas 3 días. Solo quedan 2. O eso dicen.",
-    "Miércoles. Estás en punto muerto emocional.",
-  ],
-  3: [ // Jueves
-    "Ya casi puedes fingir que trabajas pensando en el viernes.",
-    "Jueves: el eve del paraíso.",
-    "Un día más. Ya puedes oler el fin de semana.",
-    "Jueves. Tu productividad es imaginar el viernes.",
-  ],
-  4: [ // Viernes
-    "¡LO HAS CONSEGUIDO! Bueno, técnicamente todavía estás trabajando.",
-    "Viernes. Has sobrevivido otra semana.",
-    "El viernes es hoy. Pero el lunes también existirá.",
-    "Viernes por la mañana: la felicidad más mentirosa.",
-  ],
-  5: [ // Sábado
-    "¿Por qué estás aquí? Mañana tampoco trabajas.",
-    "Es sábado. Ve a tocar césped o algo.",
-    "Sábado: descansa, que el lunes vuelve el sufrimiento.",
-  ],
-  6: [ // Domingo
+  0: [ // Domingo
     "¿Por qué estás aquí? Mañana empieza todo de nuevo.",
     "Domingo por la tarde: el deporte rey es la ansiedad.",
     "Domingo. Disfruta, que el lunes es inevitable.",
     "Estás mirando esto en domingo. Eso dice mucho de ti.",
   ],
+  1: [ // Lunes
+    "El viernes está tan lejos que parece una leyenda.",
+    "Lunes. El día más mentiroso: \"esta semana será fácil\".",
+    "Empieza el infierno semanal. Respira hondo.",
+    "Hoy es lunes. El café es tu único amigo.",
+  ],
+  2: [ // Martes
+    "Sobrevives.",
+    "Martes: ni principios ni finales. Solo sufrimiento.",
+    "Sigues aquí. Impresionante.",
+    "Martes. Ni siquiera el café te salva ya.",
+  ],
+  3: [ // Miércoles
+    "Mitad de semana. No te emociones.",
+    "Miércoles: el día que no sabe si ser lunes o viernes.",
+    "Ya llevas 3 días. Solo quedan 2. O eso dicen.",
+    "Miércoles. Estás en punto muerto emocional.",
+  ],
+  4: [ // Jueves
+    "Ya casi puedes fingir que trabajas pensando en el viernes.",
+    "Jueves: el eve del paraíso.",
+    "Un día más. Ya puedes oler el fin de semana.",
+    "Jueves. Tu productividad es imaginar el viernes.",
+  ],
+  5: [ // Viernes
+    "¡LO HAS CONSEGUIDO! Bueno, técnicamente todavía estás trabajando.",
+    "Viernes. Has sobrevivido otra semana.",
+    "El viernes es hoy. Pero el lunes también existirá.",
+    "Viernes por la mañana: la felicidad más mentirosa.",
+  ],
+  6: [ // Sábado
+    "¿Por qué estás aquí? Mañana tampoco trabajas.",
+    "Es sábado. Ve a tocar césped o algo.",
+    "Sábado: descansa, que el lunes vuelve el sufrimiento.",
+  ],
 };
 
+// Salario bajo: <1400€  |  Medio: 1400-2000€  |  Alto: ≥2000€
 export const salaryPhrases = {
-  soon: [
+  low: [
     "¡Ya casi puedes volver a ser pobre con dinero!",
     "El banco está preparando tu breve momento de felicidad.",
-    "Aguanta un poquito más.",
-    "Casi. MUY CASI.",
-    "Tu nómina está a la vuelta de la esquina.",
+    "Aguanta un poquito más. El dinero viene... supuestamente.",
+    "Casi. MUY CASI. Pero tampoco es mucho.",
+    "Tu nómina está a la vuelta de la esquina. Una esquina pobre.",
+    "No gastes todo el sueldo en las primeras 48 horas. Ah, espera, ya no queda nada.",
+    "La espera es larga, pero el dinero tampoco es mucho.",
+    "Respira. Cada día es un paso hacia la felicidad efímera.",
+    "Qué lejos está el dinero. Qué cerca está el hambre.",
+    "Esperemos que no se rompa nada en casa.",
   ],
   mid: [
     "Aguanta. Tú puedes. Quizás.",
     "No gastes todo el sueldo en las primeras 48 horas.",
-    "La espera es larga, pero el dinero tampoco es mucho.",
+    "La espera es larga, pero al menos el dinero es decente.",
     "Respira. Cada día es un paso hacia la felicidad efímera.",
     "Has sobrevivido otro mes. Increíble.",
+    "Tu nómina está a la vuelta de la esquina. Pero no gastes de más.",
+    "Casi. El dinero viene, pero primero hay que sufrir un poco.",
+    "Clase media: ni ricos ni pobres. Solo cansados.",
   ],
-  far: [
-    "Qué lejos está el dinero. Qué cerca está el hambre.",
-    "Esperemos que no se rompa nada en casa.",
-    "El dinero viene, pero primero hay que sufrir.",
-    "Todavía queda mucho. Piensa en positivo... o no.",
-    "Al menos tienes trabajo. Ah, espera...",
+  high: [
+    "Eres rico. ¿Para qué miras el calendario de nóminas?",
+    "Tu sueldo tiene sueldo. Ya casi puedes comprarte otra cosa innecesaria.",
+    "No eres un trabajador. Eres un ejecutivo disfrazado mirando cuándo cae el pastizal.",
+    "Con ese sueldo ya puedes mirar a los demás trabajadores con desprecio mientras esperas.",
+    "El banco está preparando tu breve momento de felicidad. Aunque ya tienes bastante.",
+    "¿Necesitas un becario para que te cuente cuánto falta?",
+    "Todavía queda mucho. Piensa en positivo... o en comprar algo caro.",
+    "Al menos tienes trabajo. Y un buen sueldo. Deja de quejarte.",
   ],
   extraSummer: [
     "La paga extra de verano. El oasis del desierto laboral.",
@@ -124,6 +137,13 @@ export const retirementPhrases = {
     "Menos de un año. Ya puedes empezar a dormir las siestas sin culpa.",
     "Pronto serás libre. Bueno, más o menos.",
     "Meses. Puedes empezar a mirar a los jóvenes con pena.",
+  ],
+  days: [
+    "¡Casi! Ya puedes empezar a mirar a tu jefe con lástima.",
+    "Quedan días. Pronto serás libre de verdad.",
+    "Ya puedes ir despidiéndote de los emails.",
+    "A pocos días. Ya puedes oler la libertad.",
+    "Casi es tuyo. aguanta un poquito más.",
   ],
   today: [
     "¡¡¡HOY TE JUBILAS!!! ¡FIN DE LA ESCLAVITUD MODERNA!",

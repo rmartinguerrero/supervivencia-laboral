@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import { getStore } from '@netlify/blobs';
 
+export const prerender = false;
+
 // Rate limiting: track IPs with timestamps
 const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW = 5 * 60 * 1000; // 5 minutes

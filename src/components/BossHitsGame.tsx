@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { bossHitsPhrases, getRandomItem } from '../data/es/phrases';
 import {
   getStorageItem,
@@ -11,7 +11,7 @@ interface Props {
   lang?: 'es' | 'it';
 }
 
-const hitSounds = [
+const hitTexts = [
   '¡POW!',
   '¡WHACK!',
   '¡BAM!',
@@ -19,6 +19,42 @@ const hitSounds = [
   '¡OUCH!',
   '¡THWACK!',
 ];
+
+// Generate hit sound using Web Audio API
+function playHitSound() {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    // Random hit sound parameters
+    const sounds = [
+      { freq: 200, type: 'square' as OscillatorType, decay: 0.1 },
+      { freq: 150, type: 'sawtooth' as OscillatorType, decay: 0.15 },
+      { freq: 300, type: 'square' as OscillatorType, decay: 0.08 },
+      { freq: 100, type: 'triangle' as OscillatorType, decay: 0.2 },
+    ];
+
+    const sound = sounds[Math.floor(Math.random() * sounds.length)];
+
+    oscillator.type = sound.type;
+    oscillator.frequency.setValueAtTime(sound.freq, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + sound.decay);
+
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + sound.decay);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + sound.decay);
+  } catch {
+    // Silently fail if audio context not available
+  }
+}
 
 export default function BossHitsGame({ lang = 'es' }: Props) {
   const [record, setRecord] = useState<BossHitsRecord>(defaultBossHitsRecord);
@@ -33,11 +69,12 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
   }, []);
 
   const handleHit = useCallback((e: React.MouseEvent) => {
-    // Increment hits
+    // Play sound
+    playHitSound();
+
     setCurrentHits(prev => prev + 1);
     const totalHits = currentHits + 1;
 
-    // Update record
     const newRecord: BossHitsRecord = {
       totalHits: record.totalHits + 1,
       lastPlayed: new Date().toISOString(),
@@ -45,21 +82,13 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
     setRecord(newRecord);
     setStorageItem('boss-hits-record', newRecord);
 
-    // Show phrase
     setCurrentPhrase(getRandomItem(bossHitsPhrases));
 
-    // Show hit effect
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setHitEffect({
-      x,
-      y,
-      sound: getRandomItem(hitSounds),
-      id: Date.now(),
-    });
+    setHitEffect({ x, y, sound: getRandomItem(hitTexts), id: Date.now() });
 
-    // Boss reaction
     setBossState('hit');
     setTimeout(() => setBossState(totalHits % 10 === 0 ? 'angry' : 'normal'), 300);
     setTimeout(() => setHitEffect(null), 800);
@@ -78,11 +107,11 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
       <div className="game-area">
         <div className="game-header">
           <div className="stat">
-            <span className="stat-label">GOLPES ESTA SESIÓN</span>
+            <span className="stat-label">{lang === 'es' ? 'GOLPES ESTA SESIÓN' : 'COLPI QUESTA SESSIONE'}</span>
             <span className="stat-value">{currentHits}</span>
           </div>
           <div className="stat">
-            <span className="stat-label">RÉCORD TOTAL</span>
+            <span className="stat-label">{lang === 'es' ? 'RÉCORD TOTAL' : 'RECORD TOTALE'}</span>
             <span className="stat-value">{record.totalHits}</span>
           </div>
         </div>
@@ -93,24 +122,16 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
           role="button"
           tabIndex={0}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              handleHit(e as any);
-            }
+            if (e.key === 'Enter' || e.key === ' ') handleHit(e as any);
           }}
         >
           <div className="boss" data-state={bossState}>
             <span className="boss-emoji">{getBossEmoji()}</span>
-            <span className="boss-title">EL JEFE</span>
+            <span className="boss-title">{lang === 'es' ? 'EL JEFE' : 'IL BOSS'}</span>
           </div>
 
           {hitEffect && (
-            <div
-              className="hit-effect"
-              style={{
-                left: hitEffect.x,
-                top: hitEffect.y,
-              }}
-            >
+            <div className="hit-effect" style={{ left: hitEffect.x, top: hitEffect.y }}>
               {hitEffect.sound}
             </div>
           )}
@@ -118,14 +139,14 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
 
         {currentPhrase && (
           <div className="phrase-display">
-            <span className="phrase-tag">GOLPE #{currentHits}:</span>
+            <span className="phrase-tag">#{currentHits}:</span>
             {currentPhrase}
           </div>
         )}
 
         <div className="game-instructions">
-          <p>👆 HAZ CLIC EN EL JEFE PARA GOLPEARLO</p>
-          <p>Cada click es un golpe. Cada golpe es terapéutico.</p>
+          <p>{lang === 'es' ? '👆 HAZ CLIC EN EL JEFE PARA GOLPEARLO' : '👆 CLICCA SUL BOSS PER COLPIRLO'}</p>
+          <p>{lang === 'es' ? 'Cada click es un golpe. Cada golpe es terapéutico.' : 'Ogni clic è un colpo. Ogni colpo è terapeutico.'}</p>
         </div>
 
         <div className="game-footer">
@@ -137,7 +158,7 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
               setBossState('normal');
             }}
           >
-            REINICIAR SESIÓN
+            {lang === 'es' ? 'REINICIAR SESIÓN' : 'REINIZIA SESSIONE'}
           </button>
         </div>
       </div>
@@ -156,9 +177,7 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
           margin-bottom: 2rem;
         }
 
-        .game-header .stat {
-          text-align: center;
-        }
+        .game-header .stat { text-align: center; }
 
         .game-header .stat-label {
           display: block;
@@ -183,13 +202,8 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
           transition: transform 0.1s;
         }
 
-        .boss-container:hover {
-          transform: scale(1.05);
-        }
-
-        .boss-container:active {
-          transform: scale(0.95);
-        }
+        .boss-container:hover { transform: scale(1.05); }
+        .boss-container:active { transform: scale(0.95); }
 
         .boss {
           display: flex;
@@ -249,13 +263,8 @@ export default function BossHitsGame({ lang = 'es' }: Props) {
           color: var(--color-text-muted);
         }
 
-        .game-instructions p {
-          margin: 0.5rem 0;
-        }
-
-        .game-footer {
-          margin-top: 1.5rem;
-        }
+        .game-instructions p { margin: 0.5rem 0; }
+        .game-footer { margin-top: 1.5rem; }
 
         @keyframes shake {
           0%, 100% { transform: translateX(0); }

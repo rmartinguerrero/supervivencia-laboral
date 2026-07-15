@@ -9,6 +9,14 @@ interface Props {
 
 const { title, description = 'Web de supervivencia laboral para gente que está cansada de trabajar' } = Astro.props;
 const lang = Astro.currentLocale || 'es';
+
+const ogTitle = lang === 'es'
+  ? `${title} | Supervivencia Laboral`
+  : `${title} | Sopravvivenza Lavorativa`;
+
+const ogDescription = lang === 'es'
+  ? 'Herramientas absurdas para trabajadores quemados. Cuánto falta para cobrar, calculadoras, y más.'
+  : 'Strumenti assurdi per lavoratori bruciati. Quanto manca per lo stipendio, calcolatrici, e altro.';
 ---
 
 <!DOCTYPE html>
@@ -17,39 +25,142 @@ const lang = Astro.currentLocale || 'es';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content={description}>
-  <title>{title} | Supervivencia Laboral</title>
+  <title>{ogTitle}</title>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content={ogTitle}>
+  <meta property="og:description" content={ogDescription}>
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:site_name" content={lang === 'es' ? 'Supervivencia Laboral' : 'Sopravvivenza Lavorativa'}>
+  <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'it_IT'}>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={ogTitle}>
+  <meta name="twitter:description" content={ogDescription}>
+  <meta name="twitter:image" content="/og-image.png">
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
   <Navigation />
-
-  <div class="under-construction blink">
-    ⚠ EN CONSTRUCCIÓN — ESTO ES UNA OBRA VIVA ⚠
-  </div>
 
   <main class="container">
     <slot />
   </main>
 
   <footer class="retro-footer">
-    <p>© 2026 Supervivencia Laboral — Hecho con desmotivación y café</p>
-    <p>
-      <a href={`/${lang}/shop`}>Tienda</a> |
-      <a href="https://github.com" target="_blank">GitHub</a>
-    </p>
-    <p style="margin-top: 0.5rem;">
-      <small>Visitas: <span id="fake-counter">000000</span> (las counter falsas son arte)</small>
-    </p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <p class="footer-link-title">
+          {lang === 'es' ? 'Términos de uso' : 'Termini di utilizzo'}
+        </p>
+        <p class="footer-text">
+          {lang === 'es'
+            ? 'Esta web es una experiencia humorística y sarcástica sobre la vida laboral. Las herramientas son absurdas a propósito. Si buscas seriedad, te recomendamos hablar con tu jefe (spoiler: tampoco funcionará).'
+            : 'Questo sito è un\'esperienza umoristica e sarcastica sulla vita lavorativa. Gli strumenti sono assurdi apposta. Se cerchi serietà, ti consigliamo di parlare con il tuo capo (spoiler: non funzionerà nemmeno quello).'}
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <p class="footer-link-title">
+          {lang === 'es' ? 'Privacidad' : 'Privacy'}
+        </p>
+        <p class="footer-text">
+          {lang === 'es'
+            ? 'No recopilamos datos sensibles. Usamos Google Analytics para estadísticas básicas (tráfico, navegador, dispositivo). El Libro de Firmas almacena alias, mensaje y dirección IP de forma anónima. No hay cookies de rastreo, no hay vendidos a terceros. Somos trabajadores, no empresas.'
+            : 'Non raccogliamo dati sensibili. Usiamo Google Analytics per statistiche di base (traffico, browser, dispositivo). Il Libro delle Firme memorizza alias, messaggio e indirizzo IP in forma anonima. Non ci sono cookie di tracciamento, non vendiamo a terzi. Siamo lavoratori, non aziende.'}
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 {lang === 'es' ? 'Supervivencia Laboral' : 'Sopravvivenza Lavorativa'} — {lang === 'es' ? 'Hecho con desmotivación y café por' : 'Fatto con demotivazione e caffè da'} <a href="https://raulmguerrero.com" target="_blank" rel="noopener noreferrer">RaulMGuerrero</a></p>
+      <p>
+        <a href="https://github.com/rmartinguerrero/supervivencia-laboral" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </p>
+      <p style="margin-top: 0.5rem;">
+        <small>{lang === 'es' ? 'Visitas' : 'Visite'}:</small>
+        <span id="fake-counter" class="myspace-counter">
+          <span class="counter-digit">0</span><span class="counter-digit">0</span><span class="counter-digit">0</span><span class="counter-digit">0</span><span class="counter-digit">0</span><span class="counter-digit">0</span>
+        </span>
+        <small>({lang === 'es' ? 'las counters falsas son arte' : 'i contatori falsi sono arte'})</small>
+      </p>
+    </div>
   </footer>
 
   <script>
-    // Fake visitor counter for retro feel
-    const counter = document.getElementById('fake-counter');
-    if (counter) {
+    const digits = document.querySelectorAll('.counter-digit');
+    if (digits.length) {
       const base = 1337;
       const random = Math.floor(Math.random() * 9000) + base;
-      counter.textContent = random.toString().padStart(6, '0');
+      const padded = random.toString().padStart(6, '0');
+      digits.forEach((d, i) => { d.textContent = padded[i]; });
     }
   </script>
 </body>
 </html>
+
+<style>
+  .retro-footer {
+    border-top: 3px solid var(--color-primary);
+    margin-top: 3rem;
+    padding: 2rem 1rem;
+    background: linear-gradient(0deg, #0d0221 0%, transparent 100%);
+  }
+
+  .footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-section {
+    padding: 1rem;
+  }
+
+  .footer-section p {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .footer-section a {
+    color: var(--color-secondary);
+    font-weight: bold;
+  }
+
+  .footer-link-title {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-text {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    opacity: 0.8;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-card-border);
+  }
+
+  .footer-bottom p {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    margin: 0.25rem 0;
+  }
+
+  .footer-bottom a {
+    color: var(--color-secondary);
+  }
+</style>
