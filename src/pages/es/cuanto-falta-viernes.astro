@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import FridayCountdown from '../../components/FridayCountdown';
+---
+
+<Base title="¿Cuánto falta para el viernes?">
+  <h1>¿CUÁNTO FALTA PARA EL VIERNES?</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    El contador definitivo. Porque el lunes no se cuenta.
+  </p>
+
+  <FridayCountdown lang="es" client:load />
+</Base>

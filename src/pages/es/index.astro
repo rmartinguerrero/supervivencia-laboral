@@ -1,0 +1,127 @@
+---
+import Base from '../../layouts/Base.astro';
+import { homePhrases, getRandomItem } from '../../data/es/phrases';
+---
+
+<Base title="Inicio">
+  <div class="home-hero">
+    <h1>SUPERVIVENCIA LABORAL</h1>
+    <p class="hero-subtitle">La web para gente que está cansada de trabajar</p>
+    <p class="hero-phrase">{getRandomItem(homePhrases)}</p>
+  </div>
+
+  <div class="tools-grid">
+    <a href="/es/cuanto-falta-cobrar" class="tool-card">
+      <div class="tool-icon">💰</div>
+      <h2>¿CUÁNTO FALTA PARA COBRAR?</h2>
+      <p>Calcula cuántos días, horas y minutos faltan para tu próximo sueldo.</p>
+    </a>
+
+    <a href="/es/cuanto-falta-viernes" class="tool-card">
+      <div class="tool-icon">🎉</div>
+      <h2>¿CUÁNTO FALTA PARA EL VIERNES?</h2>
+      <p>El contador definitivo para saber cuánto te queda de sufrimiento.</p>
+    </a>
+
+    <a href="/es/calculadora-vida" class="tool-card">
+      <div class="tool-icon">⚖️</div>
+      <h2>VIDA vs SALARIO</h2>
+      <p>¿Cuánto vale realmente tu vida laboral? Descúbrelo con dolor.</p>
+    </a>
+
+    <a href="/es/calculadora-jubilacion" class="tool-card">
+      <div class="tool-icon">🏖️</div>
+      <h2>CALCULADORA DE JUBILACIÓN</h2>
+      <p>Cuánto tiempo te queda de esclavitud... digo, de trabajo.</p>
+    </a>
+
+    <a href="/es/libro-firmas" class="tool-card">
+      <div class="tool-icon">✍️</div>
+      <h2>LIBRO DE FIRMAS</h2>
+      <p>Firma por tus derechos. O por lo que sea. Aquí se firma por todo.</p>
+    </a>
+
+    <a href="/es/pega-al-jefe" class="tool-card">
+      <div class="tool-icon">👊</div>
+      <h2>PEGA AL JEFE</h2>
+      <p>Un minijuego para liberar toda la ira acumulada del lunes al jueves.</p>
+    </a>
+  </div>
+
+  <div class="marquee">
+    <span class="marquee-text">
+      ⚡ BIENVENIDO A LA ZONA DE SUPERVIVENCIA LABORAL — AQUÍ NO SE PRODUCTIVIZA — AQUÍ SE SOBREVIVE ⚡
+    </span>
+  </div>
+</Base>
+
+<style>
+  .home-hero {
+    text-align: center;
+    padding: 3rem 1rem;
+    border-bottom: 3px dashed var(--color-primary);
+    margin-bottom: 2rem;
+  }
+
+  .home-hero h1 {
+    font-size: 2.5rem;
+    color: var(--color-secondary);
+    text-shadow: 3px 3px 0 var(--color-primary);
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .hero-phrase {
+    font-style: italic;
+    color: var(--color-accent);
+    font-size: 1.1rem;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .tool-card {
+    background: var(--color-card-bg);
+    border: 2px solid var(--color-card-border);
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+  }
+
+  .tool-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+    text-decoration: none;
+  }
+
+  .tool-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .tool-card h2 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+  }
+
+  .tool-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .marquee {
+    margin-top: 2rem;
+  }
+</style>

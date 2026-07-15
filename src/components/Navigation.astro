@@ -1,0 +1,133 @@
+---
+const lang = Astro.currentLocale || 'es';
+
+const navItems = lang === 'es' ? [
+  { href: '/es', label: 'INICIO' },
+  { href: '/es/cuanto-falta-cobrar', label: '¿CUÁNTO FALTA?' },
+  { href: '/es/cuanto-falta-viernes', label: 'VIERNES' },
+  { href: '/es/calculadora-vida', label: 'VIDA vs SALARIO' },
+  { href: '/es/calculadora-jubilacion', label: 'JUBILACIÓN' },
+  { href: '/es/libro-firmas', label: 'LIBRO DE FIRMAS' },
+  { href: '/es/pega-al-jefe', label: 'PEGA AL JEFE' },
+] : [
+  { href: '/it', label: 'HOME' },
+  { href: '/it/quanto-mancano-stipendio', label: 'QUANTO MANCA?' },
+  { href: '/it/quanto-mancano-venerdi', label: 'VENERDÌ' },
+  { href: '/it/calcolatrice-vita', label: 'VITA vs STIPENDIO' },
+  { href: '/it/calcolatrice-pensione', label: 'PENSIONE' },
+  { href: '/it/libro-firme', label: 'LIBRO DELLE FIRME' },
+  { href: '/it/colpisci-il-props', label: 'COLPISCI IL BOSS' },
+];
+
+const otherLang = lang === 'es' ? 'it' : 'es';
+const otherLangLabel = lang === 'es' ? '🇮🇹 IT' : '🇪🇸 ES';
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="retro-nav">
+  <div class="nav-container">
+    <a href={`/${lang}`} class="nav-logo">
+      ⚡ SUPERVIVENCIA LABORAL
+    </a>
+
+    <div class="nav-links">
+      {navItems.map(item => (
+        <a
+          href={item.href}
+          class:list={['nav-link', { active: currentPath === item.href || currentPath === item.href + '/' }]}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a href={`/${otherLang}`} class="nav-link lang-switch">
+        {otherLangLabel}
+      </a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .retro-nav {
+    background: linear-gradient(180deg, #0d0221 0%, #1a0a2e 100%);
+    border-bottom: 3px solid var(--color-primary);
+    padding: 0.75rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-logo {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-logo:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .nav-link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    font-family: var(--font-main);
+    color: var(--color-text);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover {
+    color: var(--color-secondary);
+    border-color: var(--color-secondary);
+    text-decoration: none;
+  }
+
+  .nav-link.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+
+  .lang-switch {
+    margin-left: 0.5rem;
+    border: 2px dashed var(--color-accent) !important;
+    color: var(--color-accent) !important;
+  }
+
+  @media (max-width: 768px) {
+    .nav-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .nav-links {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .nav-link {
+      font-size: 0.65rem;
+      padding: 0.3rem 0.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import RetirementCalcIT from '../../components/RetirementCalcIT';
+---
+
+<Base title="Calcolatrice Pensione">
+  <h1>CALCOLATRICE PENSIONE</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    Quanto tempo manca di schiavitù... intendiamo, di lavoro.
+  </p>
+
+  <RetirementCalcIT client:load />
+</Base>

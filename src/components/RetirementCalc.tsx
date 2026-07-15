@@ -1,0 +1,213 @@
+import { useState, useEffect, useRef } from 'react';
+import { retirementPhrases, getRandomItem } from '../data/es/phrases';
+import { calculateRetirement } from '../utils/dates';
+import {
+  getStorageItem,
+  setStorageItem,
+  type RetirementConfig,
+  defaultRetirementConfig,
+} from '../utils/localStorage';
+import confetti from 'canvas-confetti';
+
+interface Props {
+  lang?: 'es' | 'it';
+}
+
+export default function RetirementCalc({ lang = 'es' }: Props) {
+  const [config, setConfig] = useState<RetirementConfig>(defaultRetirementConfig);
+  const [showConfig, setShowConfig] = useState(true);
+  const [result, setResult] = useState<ReturnType<typeof calculateRetirement> | null>(null);
+  const [phrase, setPhrase] = useState('');
+  const [showConfetti, setShowConfetti] = useState(false);
+  const confettiPlayed = useRef(false);
+
+  useEffect(() => {
+    const saved = getStorageItem<RetirementConfig>('retirement-config', defaultRetirementConfig);
+    setConfig(saved);
+  }, []);
+
+  useEffect(() => {
+    if (result?.isRetired && !confettiPlayed.current) {
+      confettiPlayed.current = true;
+      setShowConfetti(true);
+
+      // Fire confetti
+      const duration = 5 * 1000;
+      const end = Date.now() + duration;
+
+      const frame = () => {
+        confetti({
+          particleCount: 7,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ff6b35', '#f7c948', '#e84393', '#00b894'],
+        });
+        confetti({
+          particleCount: 7,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ff6b35', '#f7c948', '#e84393', '#00b894'],
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      };
+      frame();
+    }
+  }, [result]);
+
+  const calculate = () => {
+    const retirement = calculateRetirement(
+      config.currentAge,
+      config.retirementAge,
+      config.yearsContributed
+    );
+    setResult(retirement);
+
+    // Select phrase based on time remaining
+    if (retirement.isRetired) {
+      setPhrase(getRandomItem(retirementPhrases.today));
+    } else if (retirement.yearsRemaining >= 30) {
+      setPhrase(getRandomItem(retirementPhrases.decades));
+    } else if (retirement.yearsRemaining >= 10) {
+      setPhrase(getRandomItem(retirementPhrases.years));
+    } else {
+      setPhrase(getRandomItem(retirementPhrases.months));
+    }
+
+    setShowConfig(false);
+    setStorageItem('retirement-config', config);
+  };
+
+  return (
+    <div className="tool-container">
+      {showConfig ? (
+        <div className="card">
+          <h2 style={{ marginBottom: '1rem' }}>CALCULADORA DE JUBILACIÓN</h2>
+
+          <div className="form-group">
+            <label>EDAD DE JUBILACIÓN EN TU PAÍS</label>
+            <input
+              type="number"
+              min="50"
+              max="80"
+              value={config.retirementAge}
+              onChange={(e) => setConfig({ ...config, retirementAge: parseInt(e.target.value) || 67 })}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>EDAD ACTUAL</label>
+            <input
+              type="number"
+              min="16"
+              max="100"
+              value={config.currentAge}
+              onChange={(e) => setConfig({ ...config, currentAge: parseInt(e.target.value) || 30 })}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>AÑOS COTIZADOS</label>
+            <input
+              type="number"
+              min="0"
+              max="50"
+              value={config.yearsContributed}
+              onChange={(e) => setConfig({ ...config, yearsContributed: parseInt(e.target.value) || 0 })}
+            />
+          </div>
+
+          <button className="btn" onClick={calculate}>
+            CALCULAR MI LIBERTAD
+          </button>
+        </div>
+      ) : (
+        <div className="result">
+          {result?.isRetired ? (
+            <>
+              <h2>¡¡¡HOY TE JUBILAS!!!</h2>
+              <div className="big-number celebration">🎉🎉🎉</div>
+            </>
+          ) : (
+            <>
+              <h2>TE FALTAN PARA LA JUBILACIÓN</h2>
+              <div className="retirement-countdown">
+                <div className="countdown-item">
+                  <span className="countdown-number">{result?.yearsRemaining}</span>
+                  <span className="countdown-label">AÑOS</span>
+                </div>
+                <div className="countdown-item">
+                  <span className="countdown-number">{result?.monthsRemaining}</span>
+                  <span className="countdown-label">MESES</span>
+                </div>
+                <div className="countdown-item">
+                  <span className="countdown-number">{result?.daysRemaining}</span>
+                  <span className="countdown-label">DÍAS</span>
+                </div>
+              </div>
+            </>
+          )}
+
+          <p className="phrase">{phrase}</p>
+
+          <button
+            className="btn btn-small"
+            onClick={() => {
+              setShowConfig(true);
+              setShowConfetti(false);
+              confettiPlayed.current = false;
+            }}
+            style={{ marginTop: '1.5rem' }}
+          >
+            RECALCULAR
+          </button>
+        </div>
+      )}
+
+      <style>{`
+        .retirement-countdown {
+          display: flex;
+          justify-content: center;
+          gap: 2rem;
+          margin: 2rem 0;
+          flex-wrap: wrap;
+        }
+
+        .countdown-item {
+          text-align: center;
+        }
+
+        .countdown-number {
+          display: block;
+          font-family: var(--font-heading);
+          font-size: 4rem;
+          color: var(--color-secondary);
+          text-shadow: 3px 3px 0 var(--color-primary);
+          line-height: 1;
+        }
+
+        .countdown-label {
+          display: block;
+          font-size: 1rem;
+          color: var(--color-text-muted);
+          margin-top: 0.5rem;
+          text-transform: uppercase;
+        }
+
+        .celebration {
+          font-size: 4rem;
+          animation: pulse 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+          from { transform: scale(1); }
+          to { transform: scale(1.1); }
+        }
+      `}</style>
+    </div>
+  );
+}

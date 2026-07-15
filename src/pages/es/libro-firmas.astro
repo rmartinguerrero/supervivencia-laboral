@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import SignatureBook from '../../components/SignatureBook';
+---
+
+<Base title="Libro de Firmas">
+  <h1>LIBRO DE FIRMAS DE LOS TRABAJADORES</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    Tu firma cuenta. Tu causa importa. Aquí dejamos constancia de todo lo que merecemos.
+  </p>
+
+  <SignatureBook lang="es" client:load />
+</Base>

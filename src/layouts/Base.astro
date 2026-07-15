@@ -1,0 +1,55 @@
+---
+import Navigation from '../components/Navigation.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Web de supervivencia laboral para gente que está cansada de trabajar' } = Astro.props;
+const lang = Astro.currentLocale || 'es';
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content={description}>
+  <title>{title} | Supervivencia Laboral</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body>
+  <Navigation />
+
+  <div class="under-construction blink">
+    ⚠ EN CONSTRUCCIÓN — ESTO ES UNA OBRA VIVA ⚠
+  </div>
+
+  <main class="container">
+    <slot />
+  </main>
+
+  <footer class="retro-footer">
+    <p>© 2026 Supervivencia Laboral — Hecho con desmotivación y café</p>
+    <p>
+      <a href={`/${lang}/shop`}>Tienda</a> |
+      <a href="https://github.com" target="_blank">GitHub</a>
+    </p>
+    <p style="margin-top: 0.5rem;">
+      <small>Visitas: <span id="fake-counter">000000</span> (las counter falsas son arte)</small>
+    </p>
+  </footer>
+
+  <script>
+    // Fake visitor counter for retro feel
+    const counter = document.getElementById('fake-counter');
+    if (counter) {
+      const base = 1337;
+      const random = Math.floor(Math.random() * 9000) + base;
+      counter.textContent = random.toString().padStart(6, '0');
+    }
+  </script>
+</body>
+</html>

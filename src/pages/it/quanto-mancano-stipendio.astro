@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import SalaryCountdownIT from '../../components/SalaryCountdownIT';
+---
+
+<Base title="Quanto manca per lo stipendio?">
+  <h1>QUANTO MANCA PER LO STIPENDIO?</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    Inserisci il tuo giorno di pagamento e quanto guadagni. Il sito fa il resto. E soffre con te.
+  </p>
+
+  <SalaryCountdownIT client:load />
+</Base>

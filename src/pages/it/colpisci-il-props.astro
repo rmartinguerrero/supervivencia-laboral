@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import BossHitsGameIT from '../../components/BossHitsGameIT';
+---
+
+<Base title="Colpisci il Boss">
+  <h1>COLPISCI IL BOSS</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    Un minigioco per liberare tutta la rabbia accumulata da lunedì a giovedì.
+  </p>
+
+  <BossHitsGameIT client:load />
+</Base>

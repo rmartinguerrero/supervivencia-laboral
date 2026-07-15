@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import FridayCountdownIT from '../../components/FridayCountdownIT';
+---
+
+<Base title="Quanto manca al venerdì?">
+  <h1>QUANTO MANCA AL VENERDÌ?</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    Il conto alla rovescia definitivo. Perché il lunedì non si conta.
+  </p>
+
+  <FridayCountdownIT client:load />
+</Base>

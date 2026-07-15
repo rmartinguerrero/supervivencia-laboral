@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import SalaryCountdown from '../../components/SalaryCountdown';
+---
+
+<Base title="¿Cuánto falta para cobrar?">
+  <h1>¿CUÁNTO FALTA PARA COBRAR?</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    Introduce tu día de cobro y cuánto ganas. La web hace el resto. Y sufre contigo.
+  </p>
+
+  <SalaryCountdown lang="es" client:load />
+</Base>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://supervivencia-laboral.netlify.app/sitemap-index.xml

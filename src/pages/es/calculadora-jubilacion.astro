@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import RetirementCalc from '../../components/RetirementCalc';
+---
+
+<Base title="Calculadora de Jubilación">
+  <h1>CALCULADORA DE JUBILACIÓN</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    Cuánto tiempo te queda de esclavitud... digo, de trabajo.
+  </p>
+
+  <RetirementCalc lang="es" client:load />
+</Base>

@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import LifeSalaryCalcIT from '../../components/LifeSalaryCalcIT';
+---
+
+<Base title="Calcolatrice Vita vs Stipendio">
+  <h1>VITA vs STIPENDIO</h1>
+  <p style={{ marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
+    Quanto vale davvero la tua vita lavorativa? Scoprilo con dolore.
+  </p>
+
+  <LifeSalaryCalcIT client:load />
+</Base>
