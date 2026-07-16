@@ -139,8 +139,7 @@ export default function SalaryCountdownIT() {
           <div className="form-group">
             <label>
               <input type="checkbox" checked={config.hasSummerExtra}
-                onChange={(e) => setConfig({ ...config, hasSummerExtra: e.target.checked })}
-                style={{ marginRight: '0.5rem' }} />
+                onChange={(e) => setConfig({ ...config, hasSummerExtra: e.target.checked })} />
               HA TREDICESIMA ESTIVA
             </label>
           </div>
@@ -154,8 +153,7 @@ export default function SalaryCountdownIT() {
           <div className="form-group">
             <label>
               <input type="checkbox" checked={config.hasChristmasExtra}
-                onChange={(e) => setConfig({ ...config, hasChristmasExtra: e.target.checked })}
-                style={{ marginRight: '0.5rem' }} />
+                onChange={(e) => setConfig({ ...config, hasChristmasExtra: e.target.checked })} />
               HA TREDICESIMA DI NATALE
             </label>
           </div>

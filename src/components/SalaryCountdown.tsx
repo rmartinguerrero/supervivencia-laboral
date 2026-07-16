@@ -158,7 +158,6 @@ export default function SalaryCountdown() {
                 type="checkbox"
                 checked={config.hasSummerExtra}
                 onChange={(e) => setConfig({ ...config, hasSummerExtra: e.target.checked })}
-                style={{ marginRight: '0.5rem' }}
               />
               TIENE PAGA EXTRA DE VERANO
             </label>
@@ -182,7 +181,6 @@ export default function SalaryCountdown() {
                 type="checkbox"
                 checked={config.hasChristmasExtra}
                 onChange={(e) => setConfig({ ...config, hasChristmasExtra: e.target.checked })}
-                style={{ marginRight: '0.5rem' }}
               />
               TIENE PAGA EXTRA DE NAVIDAD
             </label>
