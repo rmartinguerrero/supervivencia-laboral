@@ -1,19 +1,27 @@
 ---
-// Browser language detection redirect
-return Astro.redirect('/es', 302);
+// Language detection — handled client-side
+// noscript fallback: redirect to default locale
 ---
 
-<script>
-  // Client-side language detection (for JS-enabled browsers)
-  const savedLang = localStorage.getItem('preferred-lang');
-  if (savedLang && (savedLang === 'es' || savedLang === 'it')) {
-    window.location.href = '/' + savedLang;
-  } else {
-    const browserLang = navigator.language.toLowerCase();
-    if (browserLang.startsWith('it')) {
-      window.location.href = '/it';
+<html>
+<head>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=/es/">
+  </noscript>
+</head>
+<body>
+  <script>
+    const savedLang = localStorage.getItem('preferred-lang');
+    if (savedLang && (savedLang === 'es' || savedLang === 'it')) {
+      window.location.replace('/' + savedLang + '/');
     } else {
-      window.location.href = '/es';
+      const browserLang = navigator.language.toLowerCase();
+      if (browserLang.startsWith('it')) {
+        window.location.replace('/it/');
+      } else {
+        window.location.replace('/es/');
+      }
     }
-  }
-</script>
+  </script>
+</body>
+</html>
