@@ -4,3 +4,4 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  SECRETS_SCAN_OMIT_PATHS = "node_modules/.pnpm/@netlify+config@*/node_modules/@netlify/config/**/*,node_modules/.pnpm/@netlify+dev-utils@*/node_modules/@netlify/dev-utils/**/*"
