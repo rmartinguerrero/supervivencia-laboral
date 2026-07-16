@@ -10,6 +10,9 @@ interface Props {
 const { title, description = 'Web de supervivencia laboral para gente que está cansada de trabajar' } = Astro.props;
 const lang = Astro.currentLocale || 'es';
 
+const siteUrl = 'https://job-survival.netlify.app';
+const ogImage = `${siteUrl}/supervivencia-laboral.png`;
+
 const ogTitle = lang === 'es'
   ? `${title} | Supervivencia Laboral`
   : `${title} | Sopravvivenza Lavorativa`;
@@ -17,6 +20,10 @@ const ogTitle = lang === 'es'
 const ogDescription = lang === 'es'
   ? 'Herramientas absurdas para trabajadores quemados. Cuánto falta para cobrar, calculadoras, y más.'
   : 'Strumenti assurdi per lavoratori bruciati. Quanto manca per lo stipendio, calcolatrici, e altro.';
+
+const siteName = lang === 'es' ? 'Supervivencia Laboral' : 'Sopravvivenza Lavorativa';
+const ogLocale = lang === 'es' ? 'es_ES' : 'it_IT';
+const ogLocaleAlt = lang === 'es' ? 'it_IT' : 'es_ES';
 ---
 
 <!DOCTYPE html>
@@ -27,20 +34,43 @@ const ogDescription = lang === 'es'
   <meta name="description" content={description}>
   <title>{ogTitle}</title>
 
-  <!-- Open Graph -->
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content={`${siteUrl}${Astro.url.pathname}`}>
   <meta property="og:title" content={ogTitle}>
   <meta property="og:description" content={ogDescription}>
-  <meta property="og:image" content="/og-image.png">
-  <meta property="og:site_name" content={lang === 'es' ? 'Supervivencia Laboral' : 'Sopravvivenza Lavorativa'}>
-  <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'it_IT'}>
+  <meta property="og:image" content={ogImage}>
+  <meta property="og:image:alt" content={siteName}>
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1024">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:site_name" content={siteName}>
+  <meta property="og:locale" content={ogLocale}>
+  <meta property="og:locale:alternate" content={ogLocaleAlt}>
 
-  <!-- Twitter Card -->
+  <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content={`${siteUrl}${Astro.url.pathname}`}>
   <meta name="twitter:title" content={ogTitle}>
   <meta name="twitter:description" content={ogDescription}>
-  <meta name="twitter:image" content="/og-image.png">
+  <meta name="twitter:image" content={ogImage}>
+  <meta name="twitter:image:alt" content={siteName}>
 
+  <!-- WhatsApp / Telegram (uses OG tags above) -->
+  <!-- LinkedIn -->
+  <meta property="linkedin:card" content="summary_large_image">
+  <meta property="linkedin:title" content={ogTitle}>
+  <meta property="linkedin:description" content={ogDescription}>
+  <meta property="linkedin:image" content={ogImage}>
+
+  <!-- Pinterest -->
+  <meta property="pin:media" content={ogImage}>
+  <meta property="pin:description" content={ogDescription}>
+
+  <!-- Discord / Slack (use OG tags above) -->
+
+  <!-- Standard -->
+  <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`}>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
