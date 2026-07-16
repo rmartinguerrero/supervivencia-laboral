@@ -112,27 +112,11 @@ const ogLocaleAlt = lang === 'es' ? 'it_IT' : 'es_ES';
     <div class="footer-bottom">
       <p>© 2026 {lang === 'es' ? 'Supervivencia Laboral' : 'Sopravvivenza Lavorativa'} — {lang === 'es' ? 'Hecho con desmotivación y café por' : 'Fatto con demotivazione e caffè da'} <a href="https://raulmguerrero.com" target="_blank" rel="noopener noreferrer">RaulMGuerrero</a></p>
       <p>
+        {lang === 'es' ? 'Puedes ver el repositorio en ' : 'Puoi vedere il repository su '}
         <a href="https://github.com/rmartinguerrero/supervivencia-laboral" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </p>
-      <p style="margin-top: 0.5rem;">
-        <small>{lang === 'es' ? 'Visitas' : 'Visite'}:</small>
-        <span id="fake-counter" class="myspace-counter">
-          <span class="counter-digit">0</span><span class="counter-digit">0</span><span class="counter-digit">0</span><span class="counter-digit">0</span><span class="counter-digit">0</span><span class="counter-digit">0</span>
-        </span>
-        <small>({lang === 'es' ? 'las counters falsas son arte' : 'i contatori falsi sono arte'})</small>
       </p>
     </div>
   </footer>
-
-  <script>
-    const digits = document.querySelectorAll('.counter-digit');
-    if (digits.length) {
-      const base = 1337;
-      const random = Math.floor(Math.random() * 9000) + base;
-      const padded = random.toString().padStart(6, '0');
-      digits.forEach((d, i) => { d.textContent = padded[i]; });
-    }
-  </script>
 </body>
 </html>
 

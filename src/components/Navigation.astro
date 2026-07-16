@@ -31,8 +31,8 @@ const otherLangPath = translatePath(currentPath, otherLang);
 
 <nav class="retro-nav">
   <div class="nav-container">
-    <a href={`/${lang}`} class="nav-logo">
-      💼 {lang === 'es' ? 'SUPERVIVENCIA LABORAL' : 'SOPRAVVIVENZA LAVORATIVA'}
+    <a href={`/${lang}`} class="nav-logo" title={lang === 'es' ? 'SUPERVIVENCIA LABORAL' : 'SOPRAVVIVENZA LAVORATIVA'}>
+      💼 {lang === 'es' ? 'SVL' : 'SVL'}
     </a>
 
     <div class="nav-links">
@@ -131,7 +131,7 @@ const otherLangPath = translatePath(currentPath, otherLang);
   .retro-nav {
     background: linear-gradient(180deg, #0d0221 0%, #1a0a2e 100%);
     border-bottom: 3px solid var(--color-primary);
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 1rem;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -143,17 +143,18 @@ const otherLangPath = translatePath(currentPath, otherLang);
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.3rem;
+    overflow: hidden;
   }
 
   .retro-nav .nav-logo {
     font-family: var(--font-heading);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--color-secondary);
     text-decoration: none;
     white-space: nowrap;
     flex-shrink: 0;
-    margin-right: 0.5rem;
+    margin-right: 0.3rem;
     letter-spacing: 1px;
   }
 
@@ -165,20 +166,16 @@ const otherLangPath = translatePath(currentPath, otherLang);
   .retro-nav .nav-links {
     display: flex;
     flex-wrap: nowrap;
-    gap: 0.3rem;
+    gap: 0.2rem;
     align-items: center;
-    overflow-x: auto;
     min-width: 0;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .retro-nav .nav-links::-webkit-scrollbar {
-    display: none;
+    flex: 1;
+    justify-content: flex-end;
   }
 
   .retro-nav .nav-link {
-    padding: 0.3rem 0.5rem;
-    font-size: 0.8rem;
+    padding: 0.25rem 0.4rem;
+    font-size: 0.75rem;
     font-family: var(--font-main);
     color: var(--color-text);
     text-decoration: none;
@@ -186,7 +183,7 @@ const otherLangPath = translatePath(currentPath, otherLang);
     transition: all 0.2s;
     white-space: nowrap;
     letter-spacing: 0.5px;
-    flex-shrink: 0;
+    flex-shrink: 1;
   }
 
   .retro-nav .nav-link:hover {
@@ -248,12 +245,12 @@ const otherLangPath = translatePath(currentPath, otherLang);
 
   @media (max-width: 900px) {
     .retro-nav .nav-container {
-      gap: 0.3rem 0.5rem;
+      gap: 0.2rem 0.3rem;
     }
 
     .retro-nav .nav-link {
-      font-size: 0.7rem;
-      padding: 0.25rem 0.4rem;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.3rem;
     }
 
     .retro-nav .nav-logo {
@@ -261,14 +258,14 @@ const otherLangPath = translatePath(currentPath, otherLang);
     }
 
     .retro-nav .theme-switch {
-      font-size: 0.6rem;
-      gap: 0.25rem;
-      padding: 0.2rem 0.4rem;
+      font-size: 0.55rem;
+      gap: 0.15rem;
+      padding: 0.15rem 0.3rem;
     }
 
     .retro-nav .theme-switch-btn {
-      font-size: 0.55rem;
-      padding: 0.1rem 0.3rem;
+      font-size: 0.5rem;
+      padding: 0.05rem 0.25rem;
     }
   }
 
