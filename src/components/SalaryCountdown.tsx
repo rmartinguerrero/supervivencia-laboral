@@ -90,7 +90,7 @@ export default function SalaryCountdown() {
         {!config.isConfigured ? (
           <>
             <h2>CUÁNTO FALTA PARA COBRAR</h2>
-            <div className="big-number" style={{ fontSize: '1.2rem', color: '#888', padding: '1rem' }}>
+            <div className="big-number" style={{ fontSize: '1.2rem', color: 'var(--color-text-muted)', padding: '1rem' }}>
               Configura tu día de cobro para empezar a contar
             </div>
           </>
@@ -112,7 +112,7 @@ export default function SalaryCountdown() {
               </div>
             )}
 
-            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
+            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
               Porcentaje del mes restante: {timeLeft.percentRemaining}%
             </p>
           </>

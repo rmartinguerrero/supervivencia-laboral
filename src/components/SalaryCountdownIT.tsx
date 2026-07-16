@@ -90,7 +90,7 @@ export default function SalaryCountdownIT() {
         {!config.isConfigured ? (
           <>
             <h2>QUANTO MANCANO PER LO STIPENDIO</h2>
-            <div className="big-number" style={{ fontSize: '1.2rem', color: '#888', padding: '1rem' }}>
+            <div className="big-number" style={{ fontSize: '1.2rem', color: 'var(--color-text-muted)', padding: '1rem' }}>
               Configura il giorno di pagamento per iniziare a contare
             </div>
           </>
@@ -112,7 +112,7 @@ export default function SalaryCountdownIT() {
               </div>
             )}
 
-            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
+            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
               Percentuale del mese rimanente: {timeLeft.percentRemaining}%
             </p>
           </>

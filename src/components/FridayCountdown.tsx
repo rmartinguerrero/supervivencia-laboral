@@ -66,7 +66,7 @@ export default function FridayCountdown() {
         {!config.isConfigured ? (
           <>
             <h2>CUÁNTO FALTA PARA EL VIERNES</h2>
-            <div className="big-number" style={{ fontSize: '1.2rem', color: '#888', padding: '1rem' }}>
+            <div className="big-number" style={{ fontSize: '1.2rem', color: 'var(--color-text-muted)', padding: '1rem' }}>
               Configura la hora objetivo para empezar a contar
             </div>
           </>
@@ -84,7 +84,7 @@ export default function FridayCountdown() {
             </div>
             {phrase && <p className="phrase">{phrase}</p>}
 
-            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#888' }}>
+            <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
               Hoy es {getDayName(new Date().getDay())} — Objetivo: Viernes {config.targetHour}:{config.targetMinute.toString().padStart(2, '0')}
             </p>
           </>

@@ -1,0 +1,481 @@
+/* ============================================
+   80s OFFICE THEME — "Una web moderna atrapada en una oficina de los años 80"
+   ============================================ */
+
+/* --- Variable overrides --- */
+[data-theme="80s-office"] {
+  --color-bg: #c8b89a;
+  --color-bg-secondary: #2a2520;
+  --color-primary: #6b5b3e;
+  --color-secondary: #b89b3e;
+  --color-accent: #2d6b27;
+  --color-text: #2a2520;
+  --color-text-muted: #6b5b4a;
+  --color-card-bg: rgba(42, 37, 32, 0.06);
+  --color-card-border: rgba(42, 37, 32, 0.25);
+  --color-success: #2d6b27;
+  --color-error: #8b2500;
+  --font-main: 'Courier New', Courier, monospace;
+  --font-heading: 'Impact', 'Arial Black', sans-serif;
+  --shadow-glow: none;
+}
+
+/* --- Body: clean aged paper --- */
+[data-theme="80s-office"] body {
+  background-color: var(--color-bg);
+  background-image: none;
+}
+
+/* --- Remove scanlines overlay --- */
+[data-theme="80s-office"] body::after {
+  display: none;
+}
+
+/* --- Headings --- */
+[data-theme="80s-office"] h1,
+[data-theme="80s-office"] h2,
+[data-theme="80s-office"] h3,
+[data-theme="80s-office"] h4,
+[data-theme="80s-office"] h5,
+[data-theme="80s-office"] h6 {
+  color: var(--color-primary);
+}
+
+/* --- Links --- */
+[data-theme="80s-office"] a {
+  color: var(--color-secondary);
+}
+
+[data-theme="80s-office"] a:hover {
+  color: var(--color-accent);
+}
+
+/* --- Cards --- */
+[data-theme="80s-office"] .card {
+  background: rgba(42, 37, 32, 0.04);
+  border: 2px solid var(--color-card-border);
+}
+
+[data-theme="80s-office"] .card:hover {
+  border-color: var(--color-primary);
+}
+
+/* --- Buttons --- */
+[data-theme="80s-office"] .btn {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border: 2px solid var(--color-secondary);
+}
+
+[data-theme="80s-office"] .btn:hover {
+  background: var(--color-secondary);
+  color: var(--color-bg);
+}
+
+/* --- Forms --- */
+[data-theme="80s-office"] .form-group label {
+  color: var(--color-primary);
+}
+
+[data-theme="80s-office"] .form-group input,
+[data-theme="80s-office"] .form-group select,
+[data-theme="80s-office"] .form-group textarea {
+  background: rgba(42, 37, 32, 0.06);
+  border: 2px solid var(--color-card-border);
+  color: var(--color-text);
+}
+
+[data-theme="80s-office"] .form-group input:focus,
+[data-theme="80s-office"] .form-group select:focus,
+[data-theme="80s-office"] .form-group textarea:focus {
+  border-color: var(--color-accent);
+}
+
+[data-theme="80s-office"] .form-group input[type="checkbox"] {
+  background: rgba(42, 37, 32, 0.06);
+  border: 2px solid var(--color-card-border);
+}
+
+[data-theme="80s-office"] .form-group input[type="checkbox"]:checked {
+  background: var(--color-accent);
+  border-color: var(--color-primary);
+}
+
+/* --- Result boxes --- */
+[data-theme="80s-office"] .result {
+  background: rgba(42, 37, 32, 0.06);
+  border: 2px solid var(--color-accent);
+}
+
+[data-theme="80s-office"] .result h2 {
+  color: var(--color-accent);
+}
+
+[data-theme="80s-office"] .result .big-number {
+  color: var(--color-secondary);
+}
+
+/* --- Phrases --- */
+[data-theme="80s-office"] .phrase {
+  color: var(--color-accent);
+  border-left-color: var(--color-accent);
+  background: rgba(45, 107, 39, 0.08);
+}
+
+/* --- Marquee --- */
+[data-theme="80s-office"] .marquee {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* --- Counter digits --- */
+[data-theme="80s-office"] .counter-digit {
+  background: #1a1a1a;
+  color: var(--color-accent);
+  border-color: #333;
+}
+
+/* --- Footer --- */
+[data-theme="80s-office"] .retro-footer {
+  border-top-color: var(--color-primary);
+  background: none !important;
+}
+
+[data-theme="80s-office"] .footer-link-title {
+  color: var(--color-primary);
+}
+
+/* ============================================
+   NAVBAR — 80s Office style
+   ============================================ */
+[data-theme="80s-office"] .retro-nav {
+  background: linear-gradient(180deg, #2a2520 0%, #3a3530 100%);
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+[data-theme="80s-office"] .retro-nav .nav-logo {
+  color: var(--color-secondary);
+}
+
+[data-theme="80s-office"] .retro-nav .nav-logo:hover {
+  color: var(--color-accent);
+}
+
+[data-theme="80s-office"] .retro-nav .nav-link {
+  color: #c8b89a;
+  border: 1px solid transparent;
+}
+
+[data-theme="80s-office"] .retro-nav .nav-link:hover {
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+[data-theme="80s-office"] .retro-nav .nav-link.active {
+  background: var(--color-secondary);
+  color: #2a2520;
+  border-color: var(--color-secondary);
+}
+
+[data-theme="80s-office"] .retro-nav .lang-switch {
+  border: 2px dashed var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+
+[data-theme="80s-office"] .retro-nav .hamburger-line {
+  background: var(--color-secondary);
+}
+
+[data-theme="80s-office"] .retro-nav .hamburger {
+  border-color: var(--color-secondary);
+}
+
+/* ============================================
+   80s THEME SWITCHER — classic bevel buttons
+   ============================================ */
+[data-theme="80s-office"] .theme-switch {
+  border: 2px solid var(--color-secondary);
+  background: rgba(42, 37, 32, 0.08);
+}
+
+[data-theme="80s-office"] .theme-switch-btn {
+  background: #c8b89a;
+  color: #2a2520;
+  border: 2px outset #ddd;
+  font-weight: bold;
+  padding: 0.15rem 0.4rem;
+}
+
+[data-theme="80s-office"] .theme-switch-btn:hover {
+  border-style: inset;
+  background: #b8a88a;
+}
+
+[data-theme="80s-office"] .theme-switch-btn.active {
+  border-style: inset;
+  background: var(--color-secondary);
+  color: #2a2520;
+}
+
+@media (max-width: 600px) {
+  [data-theme="80s-office"] .retro-nav .nav-links {
+    background: #2a2520;
+    border-bottom-color: var(--color-secondary);
+  }
+
+  [data-theme="80s-office"] .retro-nav .nav-link.active {
+    background: rgba(184, 155, 62, 0.15);
+    border-left-color: var(--color-secondary);
+  }
+
+  [data-theme="80s-office"] .retro-nav .nav-link:hover {
+    border-left-color: var(--color-secondary);
+  }
+
+  [data-theme="80s-office"] .retro-nav .theme-switch {
+    border-color: var(--color-secondary);
+    background: rgba(200, 184, 154, 0.1);
+  }
+
+  [data-theme="80s-office"] .retro-nav .theme-switch-btn {
+    background: #c8b89a;
+    color: #2a2520;
+    border: 2px outset #ddd;
+  }
+
+  [data-theme="80s-office"] .retro-nav .theme-switch-btn.active {
+    border-style: inset;
+    background: var(--color-secondary);
+  }
+}
+
+/* ============================================
+   TOOL CARDS — 80s Office style
+   ============================================ */
+[data-theme="80s-office"] .tool-card {
+  background: rgba(42, 37, 32, 0.04);
+  border: 2px solid var(--color-card-border);
+}
+
+[data-theme="80s-office"] .tool-card:hover {
+  border-color: var(--color-secondary);
+}
+
+[data-theme="80s-office"] .tool-card h2 {
+  color: var(--color-primary);
+}
+
+[data-theme="80s-office"] .tool-card p {
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   HERO — 80s Office style
+   ============================================ */
+[data-theme="80s-office"] .home-hero {
+  border-bottom: 2px dashed var(--color-primary);
+  position: relative;
+}
+
+[data-theme="80s-office"] .home-hero h1 {
+  color: var(--color-primary);
+  font-size: 2.8rem;
+  letter-spacing: 3px;
+}
+
+[data-theme="80s-office"] .home-hero .hero-subtitle {
+  color: var(--color-text-muted);
+  font-weight: bold;
+}
+
+[data-theme="80s-office"] .home-hero .hero-phrase {
+  color: var(--color-accent);
+  border-left-color: var(--color-accent);
+}
+
+/* ============================================
+   SYSTEM TERMINAL PANEL + OFFICE MODULE
+   Side by side via .gifs-row
+   ============================================ */
+[data-theme="80s-office"] .gifs-row {
+  display: flex;
+}
+
+[data-theme="80s-office"] .terminal-panel,
+[data-theme="80s-office"] .office-module {
+  display: block;
+  border: 2px solid var(--color-card-border);
+  background: #1a1a1a;
+  padding: 0;
+}
+
+[data-theme="80s-office"] .terminal-panel {
+  flex: 1;
+  max-width: 340px;
+}
+
+[data-theme="80s-office"] .office-module {
+  flex: 1;
+  max-width: 340px;
+}
+
+[data-theme="80s-office"] .panel-header {
+  background: var(--color-secondary);
+  color: #2a2520;
+}
+
+[data-theme="80s-office"] .panel-body {
+  padding: 0.6rem;
+  text-align: center;
+  border: 2px solid var(--color-card-border);
+  border-top: none;
+}
+
+[data-theme="80s-office"] .panel-body img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto 0.4rem;
+}
+
+[data-theme="80s-office"] .panel-status {
+  font-family: var(--font-main);
+  font-size: 0.65rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ============================================
+   PRINTER MODULE — printer.gif
+   ============================================ */
+[data-theme="80s-office"] .printer-module {
+  display: block;
+  max-width: 200px;
+  margin: 2rem auto;
+  border: 1px solid var(--color-card-border);
+  background: rgba(42, 37, 32, 0.04);
+  padding: 0;
+}
+
+[data-theme="80s-office"] .printer-module-header {
+  background: var(--color-text-muted);
+  color: var(--color-bg);
+  font-family: var(--font-main);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.2rem 0.4rem;
+  text-align: center;
+}
+
+[data-theme="80s-office"] .printer-module-body {
+  padding: 0.4rem;
+  text-align: center;
+}
+
+[data-theme="80s-office"] .printer-module-body img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ============================================
+   Hide 80s decorative elements in normal theme
+   ============================================ */
+.gifs-row,
+.terminal-panel,
+.office-module,
+.printer-module {
+  display: none;
+}
+
+/* ============================================
+   CRT FLICKER — very subtle
+   ============================================ */
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.985; }
+}
+
+[data-theme="80s-office"] .home-hero h1 {
+  animation: crt-flicker 4s ease-in-out infinite;
+}
+
+/* ============================================
+   BLINK — 80s terminal style
+   ============================================ */
+@keyframes blink-80s {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+[data-theme="80s-office"] .blink {
+  animation: blink-80s 1s steps(1) infinite;
+}
+
+/* ============================================
+   PHRASE DISPLAY — 80s style
+   ============================================ */
+[data-theme="80s-office"] .phrase {
+  border-left: 3px solid var(--color-accent);
+  font-style: normal;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   RESPONSIVE — 80s theme
+   ============================================ */
+@media (max-width: 768px) {
+  [data-theme="80s-office"] .home-hero h1 {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
+
+  [data-theme="80s-office"] .gifs-row {
+    gap: 0.8rem;
+  }
+
+  [data-theme="80s-office"] .panel-body img {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  [data-theme="80s-office"] .home-hero h1 {
+    font-size: 1.4rem;
+  }
+
+  [data-theme="80s-office"] .gifs-row {
+    gap: 0.5rem;
+  }
+
+  [data-theme="80s-office"] .panel-header {
+    font-size: 0.55rem;
+    padding: 0.25rem 0.4rem;
+  }
+
+  [data-theme="80s-office"] .panel-body img {
+    max-width: 120px;
+  }
+
+  [data-theme="80s-office"] .panel-status {
+    font-size: 0.55rem;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="80s-office"] .home-hero h1 {
+    animation: none;
+  }
+
+  [data-theme="80s-office"] .blink {
+    animation: none;
+  }
+}

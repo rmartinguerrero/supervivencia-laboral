@@ -16,6 +16,22 @@ import { homePhrases, getRandomItem } from '../../data/it/phrases';
     <p class="hero-phrase">{getRandomItem(homePhrases)}</p>
   </div>
 
+  <div class="gifs-row">
+    <div class="terminal-panel">
+      <div class="panel-header">SYSTEM TERMINAL</div>
+      <div class="panel-body">
+        <img src="/computer.gif" alt="Terminale d'ufficio" width="200" height="150" loading="lazy">
+        <div class="panel-status">STATUS: SURVIVAL MODE</div>
+      </div>
+    </div>
+    <div class="office-module">
+      <div class="panel-header">MEMO INTERNO</div>
+      <div class="panel-body">
+        <img src="/office.gif" alt="Ufficio" width="250" height="180" loading="lazy">
+      </div>
+    </div>
+  </div>
+
   <div class="tools-grid">
     <a href="/it/quanto-mancano-stipendio" class="tool-card">
       <div class="tool-icon">💰</div>
@@ -52,6 +68,13 @@ import { homePhrases, getRandomItem } from '../../data/it/phrases';
       <h2>COLPISCI IL BOSS</h2>
       <p>Un minigioco per liberare tutta la rabbia accumulata da lunedì a giovedì.</p>
     </a>
+  </div>
+
+  <div class="printer-module">
+    <div class="printer-module-header">STAMPANTE</div>
+    <div class="printer-module-body">
+      <img src="/printer.gif" alt="Stampante d'ufficio" width="150" height="120" loading="lazy">
+    </div>
   </div>
 </Base>
 
@@ -123,5 +146,66 @@ import { homePhrases, getRandomItem } from '../../data/it/phrases';
 
   .marquee {
     margin-top: 2rem;
+  }
+
+  .gifs-row {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+
+  .gifs-row > div {
+    flex: 1;
+    min-width: 0;
+    max-width: 340px;
+  }
+
+  .panel-header {
+    background: var(--color-secondary);
+    color: var(--color-bg);
+    font-family: var(--font-main);
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 0.35rem 0.6rem;
+    text-align: center;
+  }
+
+  .panel-body {
+    padding: 0.6rem;
+    text-align: center;
+    border: 2px solid var(--color-card-border);
+    border-top: none;
+  }
+
+  .panel-body img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto 0.4rem;
+  }
+
+  .panel-status {
+    font-family: var(--font-main);
+    font-size: 0.65rem;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 600px) {
+    .gifs-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .gifs-row > div {
+      max-width: 280px;
+    }
   }
 </style>

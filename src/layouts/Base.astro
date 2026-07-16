@@ -1,6 +1,7 @@
 ---
 import Navigation from '../components/Navigation.astro';
 import '../styles/global.css';
+import '../styles/theme-80s.css';
 
 interface Props {
   title: string;
@@ -72,6 +73,9 @@ const ogLocaleAlt = lang === 'es' ? 'it_IT' : 'es_ES';
   <!-- Standard -->
   <link rel="canonical" href={`${siteUrl}${Astro.url.pathname}`}>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script is:inline>
+    (function(){var t=localStorage.getItem('site-theme');if(t)document.documentElement.setAttribute('data-theme',t)})();
+  </script>
 </head>
 <body>
   <Navigation />
