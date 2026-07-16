@@ -43,7 +43,7 @@ interface Firma {
   hidden: boolean;
 }
 
-export const GET: APIRoute = async ({ request, url }) => {
+export const GET: APIRoute = async ({ url }) => {
   const lang = url.searchParams.get('lang') || 'es';
   const page = parseInt(url.searchParams.get('page') || '1');
   const limit = parseInt(url.searchParams.get('limit') || '20');

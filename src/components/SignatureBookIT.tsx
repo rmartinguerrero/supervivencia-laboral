@@ -42,7 +42,7 @@ export default function SignatureBookIT() {
     fetchFirmas(page);
   }, [page]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess(false);

@@ -146,7 +146,7 @@ export function getTimeUntilFriday(targetHour: number, targetMinute: number): {
 export function calculateRetirement(
   currentAge: number,
   retirementAge: number,
-  yearsContributed: number
+  _yearsContributed: number
 ): {
   yearsRemaining: number;
   monthsRemaining: number;

@@ -14,7 +14,6 @@ export default function RetirementCalcIT() {
   const [showConfig, setShowConfig] = useState(true);
   const [result, setResult] = useState<ReturnType<typeof calculateRetirement> | null>(null);
   const [phrase, setPhrase] = useState('');
-  const [showConfetti, setShowConfetti] = useState(false);
   const confettiPlayed = useRef(false);
 
   useEffect(() => {
@@ -52,8 +51,6 @@ export default function RetirementCalcIT() {
   useEffect(() => {
     if (result?.isRetired && !confettiPlayed.current) {
       confettiPlayed.current = true;
-      setShowConfetti(true);
-
       const duration = 5 * 1000;
       const end = Date.now() + duration;
 
@@ -169,7 +166,6 @@ export default function RetirementCalcIT() {
             className="btn btn-small"
             onClick={() => {
               setShowConfig(true);
-              setShowConfetti(false);
               confettiPlayed.current = false;
             }}
             style={{ marginTop: '1.5rem' }}

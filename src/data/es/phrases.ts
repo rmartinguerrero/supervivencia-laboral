@@ -175,7 +175,6 @@ export const bossHitsPhrases = [
 ];
 
 export const signatureCategories = [
-  { id: 'jornada-4', label: 'Jornada laboral de 4 días' },
   { id: 'reduccion-horas', label: 'Reducción de horas' },
   { id: 'salir-hora', label: 'Salir a mi hora' },
   { id: 'mas-salario', label: 'Más salario' },

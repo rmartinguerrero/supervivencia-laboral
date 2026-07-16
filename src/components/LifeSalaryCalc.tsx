@@ -11,7 +11,7 @@ interface Props {
   lang?: 'es' | 'it';
 }
 
-export default function LifeSalaryCalc({ lang = 'es' }: Props) {
+export default function LifeSalaryCalc(_props: Props) {
   const [config, setConfig] = useState<LifeSalaryConfig>(defaultLifeSalaryConfig);
   const [showConfig, setShowConfig] = useState(true);
   const [results, setResults] = useState<{

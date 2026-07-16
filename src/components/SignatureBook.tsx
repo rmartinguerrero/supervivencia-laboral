@@ -28,7 +28,6 @@ export default function SignatureBook({ lang = 'es' }: Props) {
   const [category, setCategory] = useState('');
 
   const categories = lang === 'es' ? signatureCategories : [
-    { id: 'jornada-4', label: 'Giornata lavorativa di 4 giorni' },
     { id: 'reduccion-horas', label: 'Riduzione delle ore' },
     { id: 'salir-hora', label: 'Uscire al mio orario' },
     { id: 'mas-salario', label: 'Più stipendio' },
@@ -57,7 +56,7 @@ export default function SignatureBook({ lang = 'es' }: Props) {
     fetchFirmas(page);
   }, [page, lang]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess(false);

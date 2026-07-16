@@ -9,7 +9,7 @@ const slugMap: Record<string, Record<string, string>> = {
     'calculadora-vida': 'calcolatrice-vita',
     'calculadora-jubilacion': 'calcolatrice-pensione',
     'libro-firmas': 'libro-firme',
-    'pega-al-jefe': 'colpisci-il-props',
+    'pega-al-jefe': 'colpisci-il-boss',
   },
   // IT -> ES
   it: {
@@ -18,7 +18,7 @@ const slugMap: Record<string, Record<string, string>> = {
     'calcolatrice-vita': 'calculadora-vida',
     'calcolatrice-pensione': 'calculadora-jubilacion',
     'libro-firme': 'libro-firmas',
-    'colpisci-il-props': 'pega-al-jefe',
+    'colpisci-il-boss': 'pega-al-jefe',
   },
 };
 
