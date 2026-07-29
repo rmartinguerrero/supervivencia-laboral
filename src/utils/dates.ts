@@ -168,16 +168,15 @@ export function calculateRetirement(
     };
   }
 
-  // Estimate retirement date (assuming roughly 12 months per year)
   const now = new Date();
-  const retirementDate = new Date(now);
-  retirementDate.setFullYear(retirementDate.getFullYear() + yearsLeft);
-
-  const diff = retirementDate.getTime() - now.getTime();
-  const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const yearsRemaining = Math.floor(totalDays / 365);
-  const monthsRemaining = Math.floor((totalDays % 365) / 30);
-  const daysRemaining = totalDays % 30;
+  // Use current month as a proxy for "months since last birthday"
+  // This gives non-zero months without needing the user's exact birth date
+  const totalMonths = yearsLeft * 12 - now.getMonth();
+  const yearsRemaining = Math.floor(totalMonths / 12);
+  const monthsRemaining = totalMonths % 12;
+  const totalDays = Math.round(yearsLeft * 365.25);
+  const daysRemaining = Math.round(totalDays - (yearsRemaining * 365 + monthsRemaining * 30));
+  const retirementDate = new Date(now.getTime() + totalDays * 86400000);
 
   return {
     yearsRemaining,

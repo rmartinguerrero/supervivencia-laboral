@@ -111,6 +111,8 @@ export default function LifeSalaryCalcIT() {
               <span className="stat-value big">{results?.lifeValuePerHour}€</span>
             </div>
           </div>
+          <p className="holiday-notice"><span className="holiday-notice-text">NOTA: Le festività nazionali non sono incluse in questo calcolo</span></p>
+
           <p className="phrase">{phrase}</p>
           <button className="btn btn-small" onClick={() => setShowConfig(true)} style={{ marginTop: '1.5rem' }}>
             RICALCOLA

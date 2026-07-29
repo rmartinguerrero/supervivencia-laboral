@@ -169,6 +169,8 @@ export default function LifeSalaryCalc(_props: Props) {
             </div>
           </div>
 
+          <p className="holiday-notice"><span className="holiday-notice-text">NOTA: Los festivos nacionales no están incluidos en este cálculo</span></p>
+
           <p className="phrase">{phrase}</p>
 
           <button

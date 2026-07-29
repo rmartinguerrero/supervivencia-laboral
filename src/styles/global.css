@@ -238,6 +238,19 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(-100%); }
 }
 
+/* Holiday notice — static by default, marquee in 80s theme */
+.holiday-notice {
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  text-align: center;
+  border: 1px solid var(--color-card-border);
+  background: var(--color-bg-secondary);
+}
+
 /* Blink effect for retro feel */
 .blink {
   animation: blink-animation 1s steps(2, start) infinite;
