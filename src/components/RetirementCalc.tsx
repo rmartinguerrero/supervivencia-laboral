@@ -39,9 +39,9 @@ export default function RetirementCalc() {
       setPhrase(getRandomItem(retirementPhrases.today));
     } else if (retirement.yearsRemaining >= 30) {
       setPhrase(getRandomItem(retirementPhrases.decades));
-    } else if (retirement.yearsRemaining >= 10) {
+    } else if (retirement.yearsRemaining >= 1) {
       setPhrase(getRandomItem(retirementPhrases.years));
-    } else if (retirement.yearsRemaining >= 1 || retirement.monthsRemaining >= 1) {
+    } else if (retirement.monthsRemaining >= 1) {
       setPhrase(getRandomItem(retirementPhrases.months));
     } else {
       setPhrase(getRandomItem(retirementPhrases.days));

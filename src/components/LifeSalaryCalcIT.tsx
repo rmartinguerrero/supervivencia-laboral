@@ -32,7 +32,7 @@ export default function LifeSalaryCalcIT() {
 
     const annualSalary = config.monthlySalary * 12;
     const annualWorkDays = workedWeeks * workDaysPerWeek;
-    const annualWorkHours = annualWorkDays * config.weeklyHours;
+    const annualWorkHours = workedWeeks * config.weeklyHours;
     const annualCommuteHours = annualWorkDays * (config.dailyCommuteMinutes / 60);
 
     const salaryPerHour = annualSalary / annualWorkHours;

@@ -37,9 +37,9 @@ export default function SalaryCountdownIT() {
     }
 
     const pickPhrase = (salary: number) => {
-      if (salary < 1400) return getRandomItem(salaryPhrases.low);
-      if (salary <= 2000) return getRandomItem(salaryPhrases.mid);
-      return getRandomItem(salaryPhrases.high);
+      if (salary >= 2000) return getRandomItem(salaryPhrases.high);
+      if (salary >= 1400) return getRandomItem(salaryPhrases.mid);
+      return getRandomItem(salaryPhrases.low);
     };
 
     const updateTimer = () => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { bossHitsPhrases, getRandomItem } from '../data/it/phrases';
 import {
   getStorageItem,
@@ -16,16 +16,19 @@ const hitTexts = [
   'THWACK!',
 ];
 
+let audioCtx: AudioContext | null = null;
+
 function playHitSound() {
   if (typeof window === 'undefined') return;
-
   try {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
 
     oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    gainNode.connect(audioCtx.destination);
 
     const sounds = [
       { freq: 200, type: 'square' as OscillatorType, decay: 0.1 },
@@ -37,14 +40,14 @@ function playHitSound() {
     const sound = sounds[Math.floor(Math.random() * sounds.length)];
 
     oscillator.type = sound.type;
-    oscillator.frequency.setValueAtTime(sound.freq, audioContext.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + sound.decay);
+    oscillator.frequency.setValueAtTime(sound.freq, audioCtx.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + sound.decay);
 
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + sound.decay);
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + sound.decay);
 
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + sound.decay);
+    oscillator.start(audioCtx.currentTime);
+    oscillator.stop(audioCtx.currentTime + sound.decay);
   } catch {}
 }
 
@@ -54,6 +57,7 @@ export default function BossHitsGameIT() {
   const [currentPhrase, setCurrentPhrase] = useState('');
   const [hitEffect, setHitEffect] = useState<{ x: number; y: number; sound: string; id: number } | null>(null);
   const [bossState, setBossState] = useState<'normal' | 'hit' | 'angry'>('normal');
+  const hitCountRef = useRef(0);
 
   useEffect(() => {
     const saved = getStorageItem<BossHitsRecord>('boss-hits-record', defaultBossHitsRecord);
@@ -63,15 +67,18 @@ export default function BossHitsGameIT() {
   const handleHit = useCallback((e: React.MouseEvent) => {
     playHitSound();
 
-    setCurrentHits(prev => prev + 1);
-    const totalHits = currentHits + 1;
+    hitCountRef.current += 1;
+    const totalHits = hitCountRef.current;
+    setCurrentHits(totalHits);
 
-    const newRecord: BossHitsRecord = {
-      totalHits: record.totalHits + 1,
-      lastPlayed: new Date().toISOString(),
-    };
-    setRecord(newRecord);
-    setStorageItem('boss-hits-record', newRecord);
+    setRecord(prev => {
+      const next: BossHitsRecord = {
+        totalHits: prev.totalHits + 1,
+        lastPlayed: new Date().toISOString(),
+      };
+      setStorageItem('boss-hits-record', next);
+      return next;
+    });
 
     setCurrentPhrase(getRandomItem(bossHitsPhrases));
 
@@ -83,7 +90,7 @@ export default function BossHitsGameIT() {
     setBossState('hit');
     setTimeout(() => setBossState(totalHits % 10 === 0 ? 'angry' : 'normal'), 300);
     setTimeout(() => setHitEffect(null), 800);
-  }, [currentHits, record.totalHits]);
+  }, []);
 
   const getBossEmoji = () => {
     switch (bossState) {
@@ -134,6 +141,7 @@ export default function BossHitsGameIT() {
 
         <div className="game-footer">
           <button className="btn btn-small" onClick={() => {
+            hitCountRef.current = 0;
             setCurrentHits(0);
             setCurrentPhrase('');
             setBossState('normal');
